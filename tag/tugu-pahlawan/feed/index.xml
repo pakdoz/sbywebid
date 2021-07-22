@@ -134,20 +134,8 @@
 				<div class="elementor-element elementor-element-32a26c4 elementor-widget elementor-widget-gallery" data-id="32a26c4" data-element_type="widget" data-settings="{&quot;gallery_layout&quot;:&quot;justified&quot;,&quot;lazyload&quot;:&quot;yes&quot;,&quot;ideal_row_height&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:200,&quot;sizes&quot;:[]},&quot;ideal_row_height_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:150,&quot;sizes&quot;:[]},&quot;ideal_row_height_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:150,&quot;sizes&quot;:[]},&quot;gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;link_to&quot;:&quot;file&quot;,&quot;overlay_background&quot;:&quot;yes&quot;,&quot;content_hover_animation&quot;:&quot;fade-in&quot;}" data-widget_type="gallery.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-gallery__container">
-							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/kk209504_clip10.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="kk209504_clip10">
-					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/kk209504_clip10-300x169.jpg" data-width="300" data-height="169" alt="museum 10 nopember" ></div>
-										<div class="elementor-gallery-item__overlay"></div>
-														</a>
 							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-2.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 2">
 					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-2-300x169.jpg" data-width="300" data-height="169" alt="museum-10-nopember-surabaya" ></div>
-										<div class="elementor-gallery-item__overlay"></div>
-														</a>
-							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-5.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 5">
-					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-5-300x169.jpg" data-width="300" data-height="169" alt="museum-10-nopember-surabaya" ></div>
-										<div class="elementor-gallery-item__overlay"></div>
-														</a>
-							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-3.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 3">
-					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-3-300x169.jpg" data-width="300" data-height="169" alt="museum-10-nopember-surabaya" ></div>
 										<div class="elementor-gallery-item__overlay"></div>
 														</a>
 							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-1.jpeg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 1">
@@ -156,6 +144,18 @@
 														</a>
 							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-4.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 4">
 					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-4-235x300.jpg" data-width="235" data-height="300" alt="museum-10-nopember-surabaya" ></div>
+										<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/kk209504_clip10.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="kk209504_clip10">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/kk209504_clip10-300x169.jpg" data-width="300" data-height="169" alt="museum 10 nopember" ></div>
+										<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-3.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 3">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-3-300x169.jpg" data-width="300" data-height="169" alt="museum-10-nopember-surabaya" ></div>
+										<div class="elementor-gallery-item__overlay"></div>
+														</a>
+							<a class="e-gallery-item elementor-gallery-item elementor-animated-content" href="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-5.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="all-32a26c4" data-elementor-lightbox-title="museum 10 nopember surabaya 5">
+					<div class="e-gallery-image elementor-gallery-item__image" data-thumbnail="https://www.suroboyo.web.id/wp-content/uploads/2021/07/museum-10-nopember-surabaya-5-300x169.jpg" data-width="300" data-height="169" alt="museum-10-nopember-surabaya" ></div>
 										<div class="elementor-gallery-item__overlay"></div>
 														</a>
 					</div>
