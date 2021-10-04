@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+</script>
+	<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+	<!-- This site is optimized with the Yoast SEO plugin v17.2.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>jendral mallaby Archives - The Suroboyo Heritage Trail</title>
+<style id="rocket-critical-css">.menu-item-object-language_switcher .trp-flag-image{display:inline-block;margin:-1px 5px;vertical-align:baseline;padding:0;border:0;border-radius:0}html{line-height:1.15;-webkit-text-size-adjust:100%}*,:after,:before{-webkit-box-sizing:border-box;box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;font-size:1rem;font-weight:400;line-height:1.5;color:#333;background-color:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}h1,h3{margin-top:.5rem;margin-bottom:1rem;font-family:inherit;font-weight:500;line-height:1.2;color:inherit}h1{font-size:2.5rem}h3{font-size:1.75rem}p{margin-top:0;margin-bottom:.9rem}a{background-color:transparent;text-decoration:none;color:#c36}a:not([href]):not([tabindex]){color:inherit;text-decoration:none}img{border-style:none;height:auto;max-width:100%}label{display:inline-block;line-height:1;vertical-align:middle}input{font-family:inherit;font-size:1rem;line-height:1.5;margin:0}input[type=search]{width:100%;border:1px solid #666;border-radius:3px;padding:.5rem 1rem}input{overflow:visible}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}li,ul{margin-top:0;margin-bottom:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}.site-navigation{grid-area:nav-menu;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.elementor-screen-only{position:absolute;top:-10000em;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);border:0}.elementor{-webkit-hyphens:manual;-ms-hyphens:manual;hyphens:manual}.elementor *,.elementor :after,.elementor :before{-webkit-box-sizing:border-box;box-sizing:border-box}.elementor a{-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.elementor img{height:auto;max-width:100%;border:none;-webkit-border-radius:0;border-radius:0;-webkit-box-shadow:none;box-shadow:none}:root{--page-title-display:block}.elementor-page-title{display:var(--page-title-display)}.elementor-section{position:relative}.elementor-section .elementor-container{display:-webkit-box;display:-ms-flexbox;display:flex;margin-right:auto;margin-left:auto;position:relative}@media (max-width:1024px){.elementor-section .elementor-container{-ms-flex-wrap:wrap;flex-wrap:wrap}}.elementor-section.elementor-section-boxed>.elementor-container{max-width:1140px}.elementor-widget-wrap{position:relative;width:100%;-ms-flex-wrap:wrap;flex-wrap:wrap;-ms-flex-line-pack:start;align-content:flex-start}.elementor:not(.elementor-bc-flex-widget) .elementor-widget-wrap{display:-webkit-box;display:-ms-flexbox;display:flex}.elementor-widget-wrap>.elementor-element{width:100%}.elementor-widget{position:relative}.elementor-widget:not(:last-child){margin-bottom:20px}.elementor-column{min-height:1px}.elementor-column{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex}.elementor-column-gap-default>.elementor-column>.elementor-element-populated{padding:10px}@media (min-width:768px){.elementor-column.elementor-col-33{width:33.333%}.elementor-column.elementor-col-50{width:50%}.elementor-column.elementor-col-66{width:66.666%}.elementor-column.elementor-col-100{width:100%}}@media (max-width:767px){.elementor-column{width:100%}}.elementor-grid{display:grid;grid-column-gap:var(--grid-column-gap);grid-row-gap:var(--grid-row-gap)}.elementor-grid .elementor-grid-item{min-width:0}.elementor-grid-0 .elementor-grid{display:inline-block;width:100%;word-spacing:var(--grid-column-gap);margin-bottom:calc(-1 * var(--grid-row-gap))}.elementor-grid-0 .elementor-grid .elementor-grid-item{display:inline-block;margin-bottom:var(--grid-row-gap);word-break:break-word}.elementor-grid-1 .elementor-grid{grid-template-columns:repeat(1,1fr)}@media (max-width:1024px){.elementor-grid-tablet-1 .elementor-grid{grid-template-columns:repeat(1,1fr)}}@media (max-width:767px){.elementor-grid-mobile-0 .elementor-grid{display:inline-block;width:100%;word-spacing:var(--grid-column-gap);margin-bottom:calc(-1 * var(--grid-row-gap))}.elementor-grid-mobile-0 .elementor-grid .elementor-grid-item{display:inline-block;margin-bottom:var(--grid-row-gap);word-break:break-word}.elementor-grid-mobile-1 .elementor-grid{grid-template-columns:repeat(1,1fr)}}[class^=eicon]{display:inline-block;font-family:eicons;font-size:inherit;font-weight:400;font-style:normal;font-variant:normal;line-height:1;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.eicon-menu-bar:before{content:"\e816"}.elementor-icon{display:inline-block;line-height:1;color:#818a91;font-size:50px;text-align:center}.elementor-icon svg{width:1em;height:1em;position:relative;display:block}.elementor-icon svg:before{position:absolute;left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}@media (max-width:767px){.elementor .elementor-hidden-phone{display:none}}.elementor-kit-6{--e-global-color-primary:#6EC1E4;--e-global-color-secondary:#54595F;--e-global-color-text:#000000;--e-global-color-accent:#61CE70;--e-global-color-6a8ba18:#FFFAF5;--e-global-typography-primary-font-family:"Playfair Display";--e-global-typography-primary-font-weight:bold;--e-global-typography-secondary-font-family:"Playfair Display";--e-global-typography-text-font-family:"Georgia";--e-global-typography-accent-font-family:"Georgia";--e-global-typography-accent-font-weight:normal;color:#000000;font-family:"Georgia",Sans-serif;background-color:#E6DED2}.elementor-kit-6 a{color:#000000;font-family:"Georgia",Sans-serif;font-weight:bold}.elementor-kit-6 h1{color:#000000;font-family:"Playfair Display",Sans-serif;font-weight:900}.elementor-kit-6 h3{color:#000000;font-family:"Playfair Display",Sans-serif}.elementor-kit-6 label{font-family:"Georgia",Sans-serif}.elementor-kit-6 input:not([type="button"]):not([type="submit"]){font-family:"Georgia",Sans-serif}.elementor-section.elementor-section-boxed>.elementor-container{max-width:1140px}.elementor-widget:not(:last-child){margin-bottom:20px}@media (max-width:1024px){.elementor-section.elementor-section-boxed>.elementor-container{max-width:1024px}}@media (max-width:767px){.elementor-section.elementor-section-boxed>.elementor-container{max-width:767px}}.elementor-location-header:before{content:"";display:table;clear:both}.elementor-search-form{display:block}.elementor-search-form .e-font-icon-svg-container{width:100%;height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.elementor-search-form input[type=search]{margin:0;border:0;padding:0;display:inline-block;vertical-align:middle;white-space:normal;background:none;line-height:1;min-width:0;font-size:15px;-webkit-appearance:none;-moz-appearance:none}.elementor-search-form__container{display:-webkit-box;display:-ms-flexbox;display:flex;overflow:hidden;border:0 solid transparent;min-height:50px}.elementor-search-form__container:not(.elementor-search-form--full-screen){background:#eceeef}.elementor-search-form__input{-ms-flex-preferred-size:100%;flex-basis:100%;color:#55595c}.elementor-search-form__input::-webkit-input-placeholder{color:inherit;font-family:inherit;opacity:.6}.elementor-search-form__input:-ms-input-placeholder{color:inherit;font-family:inherit;opacity:.6}.elementor-search-form__input:-moz-placeholder,.elementor-search-form__input::-moz-placeholder{color:inherit;font-family:inherit;opacity:.6}.elementor-search-form__input::-ms-input-placeholder{color:inherit;font-family:inherit;opacity:.6}.elementor-search-form--skin-minimal .elementor-search-form__icon{opacity:.6;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;color:#55595c;fill:#55595c;font-size:var(--e-search-form-icon-size-minimal,15px)}.elementor-search-form--skin-minimal .elementor-search-form__icon svg{width:var(--e-search-form-icon-size-minimal,15px);height:var(--e-search-form-icon-size-minimal,15px)}.elementor-widget-heading .elementor-heading-title{color:var(--e-global-color-primary);font-family:var(--e-global-typography-primary-font-family),Sans-serif;font-weight:var(--e-global-typography-primary-font-weight)}.elementor-widget-text-editor{color:var(--e-global-color-text);font-family:var(--e-global-typography-text-font-family),Sans-serif}.elementor-widget-theme-archive-title .elementor-heading-title{color:var(--e-global-color-primary);font-family:var(--e-global-typography-primary-font-family),Sans-serif;font-weight:var(--e-global-typography-primary-font-weight)}.elementor-widget-posts .elementor-post__title,.elementor-widget-posts .elementor-post__title a{color:var(--e-global-color-secondary);font-family:var(--e-global-typography-primary-font-family),Sans-serif;font-weight:var(--e-global-typography-primary-font-weight)}.elementor-widget-posts .elementor-post__meta-data{font-family:var(--e-global-typography-secondary-font-family),Sans-serif}.elementor-widget-posts .elementor-post__excerpt p{font-family:var(--e-global-typography-text-font-family),Sans-serif}.elementor-widget-form .elementor-field-group>label{color:var(--e-global-color-text)}.elementor-widget-form .elementor-field-group>label{font-family:var(--e-global-typography-text-font-family),Sans-serif}.elementor-widget-nav-menu .elementor-nav-menu .elementor-item{font-family:var(--e-global-typography-primary-font-family),Sans-serif;font-weight:var(--e-global-typography-primary-font-weight)}.elementor-widget-nav-menu .elementor-nav-menu--main .elementor-item{color:var(--e-global-color-text);fill:var(--e-global-color-text)}.elementor-widget-nav-menu .elementor-nav-menu--main:not(.e--pointer-framed) .elementor-item:before,.elementor-widget-nav-menu .elementor-nav-menu--main:not(.e--pointer-framed) .elementor-item:after{background-color:var(--e-global-color-accent)}.elementor-widget-nav-menu .elementor-nav-menu--dropdown .elementor-item,.elementor-widget-nav-menu .elementor-nav-menu--dropdown .elementor-sub-item{font-family:var(--e-global-typography-accent-font-family),Sans-serif;font-weight:var(--e-global-typography-accent-font-weight)}.elementor-widget-search-form input[type="search"].elementor-search-form__input{font-family:var(--e-global-typography-text-font-family),Sans-serif}.elementor-widget-search-form .elementor-search-form__input,.elementor-widget-search-form .elementor-search-form__icon{color:var(--e-global-color-text);fill:var(--e-global-color-text)}.elementor-17 .elementor-element.elementor-element-57559939>.elementor-container>.elementor-column>.elementor-widget-wrap{align-content:center;align-items:center}.elementor-17 .elementor-element.elementor-element-32a3bd4f>.elementor-element-populated{margin:0px 0px 0px 0px;padding:0px 0px 0px 0px}.elementor-17 .elementor-element.elementor-element-2e6d636.elementor-column.elementor-element[data-element_type="column"]>.elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center}.elementor-17 .elementor-element.elementor-element-f290b0a{--grid-template-columns:repeat(0, auto);--icon-size:18px;--grid-column-gap:5px;--grid-row-gap:0px}.elementor-17 .elementor-element.elementor-element-f290b0a .elementor-widget-container{text-align:center}.elementor-17 .elementor-element.elementor-element-f290b0a .elementor-social-icon{background-color:#54595F;--icon-padding:0.5em}.elementor-17 .elementor-element.elementor-element-11d500f9{text-align:center}.elementor-17 .elementor-element.elementor-element-11d500f9 img{width:255px}.elementor-17 .elementor-element.elementor-element-11d500f9>.elementor-widget-container{margin:15px 0px 15px 0px}.elementor-17 .elementor-element.elementor-element-fccb164.elementor-column.elementor-element[data-element_type="column"]>.elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center}.elementor-17 .elementor-element.elementor-element-82cf742 .elementor-search-form__container{min-height:40px}body:not(.rtl) .elementor-17 .elementor-element.elementor-element-82cf742 .elementor-search-form__icon{padding-left:calc(40px / 3)}.elementor-17 .elementor-element.elementor-element-82cf742 .elementor-search-form__input{padding-left:calc(40px / 3);padding-right:calc(40px / 3)}.elementor-17 .elementor-element.elementor-element-82cf742 .elementor-search-form__input,.elementor-17 .elementor-element.elementor-element-82cf742 .elementor-search-form__icon{color:var(--e-global-color-text);fill:var(--e-global-color-text)}.elementor-17 .elementor-element.elementor-element-82cf742:not(.elementor-search-form--skin-full_screen) .elementor-search-form__container{border-radius:3px}.elementor-17 .elementor-element.elementor-element-82cf742>.elementor-widget-container{padding:0px 30px 0px 30px}.elementor-17 .elementor-element.elementor-element-436af1ee .elementor-menu-toggle{margin:0 auto;background-color:rgba(0,0,0,0)}.elementor-17 .elementor-element.elementor-element-436af1ee .elementor-nav-menu .elementor-item{font-size:15px;font-weight:bold;text-transform:uppercase}.elementor-17 .elementor-element.elementor-element-436af1ee .elementor-nav-menu--main .elementor-item{color:#303030;fill:#303030;padding-left:41px;padding-right:41px;padding-top:16px;padding-bottom:16px}.elementor-17 .elementor-element.elementor-element-436af1ee .elementor-nav-menu--main:not(.e--pointer-framed) .elementor-item:before,.elementor-17 .elementor-element.elementor-element-436af1ee .elementor-nav-menu--main:not(.e--pointer-framed) .elementor-item:after{background-color:#84683B}.elementor-17 .elementor-element.elementor-element-436af1ee div.elementor-menu-toggle{color:#000000}.elementor-17 .elementor-element.elementor-element-436af1ee>.elementor-widget-container{border-style:dotted;border-width:1px 0px 1px 0px;border-color:#8e8e8e}@media (max-width:1024px){.elementor-17 .elementor-element.elementor-element-57559939{padding:20px 20px 20px 20px}.elementor-17 .elementor-element.elementor-element-11d500f9 img{width:75%}.elementor-17 .elementor-element.elementor-element-11d500f9>.elementor-widget-container{margin:0px 0px 0px 0px}}@media (max-width:767px){.elementor-17 .elementor-element.elementor-element-f290b0a{--grid-template-columns:repeat(0, auto)}.elementor-17 .elementor-element.elementor-element-f290b0a .elementor-widget-container{text-align:center}.elementor-17 .elementor-element.elementor-element-11d500f9 img{width:140px}.elementor-17 .elementor-element.elementor-element-11d500f9>.elementor-widget-container{margin:010px 0px 10px 0px}}.elementor-114 .elementor-element.elementor-element-4537fe35{margin-top:15px;margin-bottom:0px}.elementor-114 .elementor-element.elementor-element-2c7dd516.elementor-column.elementor-element[data-element_type="column"]>.elementor-widget-wrap.elementor-element-populated{align-content:flex-start;align-items:flex-start}.elementor-114 .elementor-element.elementor-element-63173338>.elementor-container{min-height:220px}.elementor-114 .elementor-element.elementor-element-63173338:not(.elementor-motion-effects-element-type-background){background-color:#f7f7f7}.elementor-114 .elementor-element.elementor-element-63173338{margin-top:0px;margin-bottom:0px}.elementor-114 .elementor-element.elementor-element-2c845afa.elementor-column.elementor-element[data-element_type="column"]>.elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center}.elementor-114 .elementor-element.elementor-element-2c845afa:not(.elementor-motion-effects-element-type-background)>.elementor-widget-wrap{background-color:#6C7C69}.elementor-114 .elementor-element.elementor-element-2c845afa>.elementor-element-populated{padding:0% 10% 0% 11%}.elementor-114 .elementor-element.elementor-element-5867f1eb .elementor-heading-title{color:#FFFFFF;font-size:50px;line-height:1.4em}.elementor-114 .elementor-element.elementor-element-11de6b0e>.elementor-element-populated{padding:0px 0px 0px 0px}.elementor-114 .elementor-element.elementor-element-2704e33a{text-align:right}.elementor-114 .elementor-element.elementor-element-2704e33a img{width:100%}.elementor-114 .elementor-element.elementor-element-40f48349>.elementor-container{max-width:1400px}.elementor-114 .elementor-element.elementor-element-40f48349{margin-top:80px;margin-bottom:0px}.elementor-114 .elementor-element.elementor-element-11fa6e52>.elementor-element-populated{padding:0px 150px 0px 20px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-posts-container .elementor-post__thumbnail{padding-bottom:calc(0.75 * 100%)}.elementor-114 .elementor-element.elementor-element-7c703d58:after{content:"0.75"}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__thumbnail__link{width:35%}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__meta-data span+span:before{content:"|"}.elementor-114 .elementor-element.elementor-element-7c703d58{--grid-column-gap:50px;--grid-row-gap:50px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__text{padding:0px 0px 0px 0px}.elementor-114 .elementor-element.elementor-element-7c703d58.elementor-posts--thumbnail-left .elementor-post__thumbnail__link{margin-right:30px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__title,.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__title a{color:#000000;font-size:24px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__title{margin-bottom:15px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__meta-data{color:#00000080;font-size:14px;margin-bottom:15px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__excerpt p{color:#000000;font-size:18px;font-weight:300}.elementor-114 .elementor-element.elementor-element-7c703d58>.elementor-widget-container{margin:50px 0px 0px 0px}.elementor-114 .elementor-element.elementor-element-4a3b4a70>.elementor-element-populated{padding:0px 20px 0px 0px}.elementor-114 .elementor-element.elementor-element-2a239c6a:not(.elementor-motion-effects-element-type-background){background-color:#F2EAE3}.elementor-114 .elementor-element.elementor-element-2a239c6a{border-style:solid;border-width:1px 1px 1px 1px;border-color:rgba(12,12,12,0.1);margin-top:70px;margin-bottom:0px}.elementor-114 .elementor-element.elementor-element-1990b494>.elementor-widget-wrap>.elementor-widget:not(.elementor-widget__width-auto):not(.elementor-widget__width-initial):not(:last-child):not(.elementor-absolute){margin-bottom:20px}.elementor-114 .elementor-element.elementor-element-1990b494>.elementor-element-populated{padding:50px 50px 50px 50px}.elementor-114 .elementor-element.elementor-element-441805f5 .elementor-heading-title{color:#0c0c0c;font-size:27px;font-weight:normal;line-height:1.3em}.elementor-114 .elementor-element.elementor-element-21577420{color:rgba(12,12,12,0.5);font-size:16px;font-weight:300}.elementor-114 .elementor-element.elementor-element-49486d7e .elementor-field-group>label{color:var(--e-global-color-text)}body.elementor-page-114:not(.elementor-motion-effects-element-type-background){background-color:var(--e-global-color-6a8ba18)}@media (max-width:1024px){.elementor-114 .elementor-element.elementor-element-63173338>.elementor-container{min-height:141px}.elementor-114 .elementor-element.elementor-element-5867f1eb .elementor-heading-title{font-size:30px}.elementor-114 .elementor-element.elementor-element-40f48349{margin-top:100px;margin-bottom:0px}.elementor-114 .elementor-element.elementor-element-11fa6e52>.elementor-element-populated{padding:0px 50px 0px 50px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-posts-container .elementor-post__thumbnail{padding-bottom:calc(0.8 * 100%)}.elementor-114 .elementor-element.elementor-element-7c703d58:after{content:"0.8"}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__thumbnail__link{width:45%}.elementor-114 .elementor-element.elementor-element-4a3b4a70>.elementor-element-populated{padding:0px 50px 0px 50px}}@media (max-width:767px){.elementor-114 .elementor-element.elementor-element-63173338>.elementor-container{min-height:100px}.elementor-114 .elementor-element.elementor-element-5867f1eb .elementor-heading-title{font-size:30px}.elementor-114 .elementor-element.elementor-element-11fa6e52>.elementor-element-populated{padding:20px 20px 20px 20px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-posts-container .elementor-post__thumbnail{padding-bottom:calc(1.75 * 100%)}.elementor-114 .elementor-element.elementor-element-7c703d58:after{content:"1.75"}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__thumbnail__link{width:35%}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__title,.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__title a{font-size:16px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__meta-data{font-size:12px}.elementor-114 .elementor-element.elementor-element-7c703d58 .elementor-post__excerpt p{font-size:12px}.elementor-114 .elementor-element.elementor-element-4a3b4a70>.elementor-element-populated{padding:20px 20px 20px 20px}.elementor-114 .elementor-element.elementor-element-1990b494>.elementor-element-populated{padding:30px 30px 30px 30px}.elementor-114 .elementor-element.elementor-element-441805f5 .elementor-heading-title{font-size:28px;line-height:1.2em}}@media (min-width:768px){.elementor-114 .elementor-element.elementor-element-2c7dd516{width:55%}.elementor-114 .elementor-element.elementor-element-11de6b0e{width:45%}.elementor-114 .elementor-element.elementor-element-11fa6e52{width:69.665%}.elementor-114 .elementor-element.elementor-element-4a3b4a70{width:30%}}@media (max-width:1024px) and (min-width:768px){.elementor-114 .elementor-element.elementor-element-11fa6e52{width:100%}.elementor-114 .elementor-element.elementor-element-4a3b4a70{width:100%}}.elementor-item:after,.elementor-item:before{display:block;position:absolute}.elementor-item:not(:hover):not(:focus):not(.elementor-item-active):not(.highlighted):after,.elementor-item:not(:hover):not(:focus):not(.elementor-item-active):not(.highlighted):before{opacity:0}.e--pointer-double-line .elementor-item:after,.e--pointer-double-line .elementor-item:before{height:3px;width:100%;left:0;background-color:#55595c;z-index:2}.e--pointer-double-line.e--animation-drop-in .elementor-item:not(:hover):not(:focus):not(.elementor-item-active):not(.highlighted):before{top:-10px}.e--pointer-double-line.e--animation-drop-in .elementor-item:not(:hover):not(:focus):not(.elementor-item-active):not(.highlighted):after{bottom:-10px}.e--pointer-double-line .elementor-item:before{content:"";top:0}.e--pointer-double-line .elementor-item:after{content:"";bottom:0}.elementor-nav-menu--main .elementor-nav-menu a{padding:13px 20px}.elementor-nav-menu--main .elementor-nav-menu ul{position:absolute;width:12em;border-width:0;border-style:solid;padding:0}.elementor-nav-menu--layout-horizontal{display:-webkit-box;display:-ms-flexbox;display:flex}.elementor-nav-menu--layout-horizontal .elementor-nav-menu{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.elementor-nav-menu--layout-horizontal .elementor-nav-menu a{white-space:nowrap}.elementor-nav-menu__align-center .elementor-nav-menu{margin-left:auto;margin-right:auto}.elementor-nav-menu__align-center .elementor-nav-menu{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.elementor-widget-nav-menu .elementor-widget-container{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.elementor-nav-menu{position:relative;z-index:2}.elementor-nav-menu:after{content:"\00a0";display:block;height:0;font:0/0 serif;clear:both;visibility:hidden;overflow:hidden}.elementor-nav-menu,.elementor-nav-menu li,.elementor-nav-menu ul{display:block;list-style:none;margin:0;padding:0;line-height:normal}.elementor-nav-menu ul{display:none}.elementor-nav-menu a,.elementor-nav-menu li{position:relative}.elementor-nav-menu li{border-width:0}.elementor-nav-menu a{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.elementor-nav-menu a{padding:10px 20px;line-height:20px}.elementor-menu-toggle{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;font-size:22px;padding:.25em;border:0 solid;border-radius:3px;background-color:rgba(0,0,0,.05);color:#494c4f}.elementor-nav-menu--dropdown{background-color:#fff;font-size:13px}.elementor-nav-menu--dropdown.elementor-nav-menu__container{margin-top:10px;-webkit-transform-origin:top;-ms-transform-origin:top;transform-origin:top;overflow:auto}.elementor-nav-menu--dropdown.elementor-nav-menu__container .elementor-sub-item{font-size:.85em}.elementor-nav-menu--dropdown a{color:#494c4f;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}ul.elementor-nav-menu--dropdown a{text-shadow:none;border-left:8px solid transparent}.elementor-nav-menu--toggle .elementor-menu-toggle:not(.elementor-active)+.elementor-nav-menu__container{-webkit-transform:scaleY(0);-ms-transform:scaleY(0);transform:scaleY(0);max-height:0}@media (min-width:1025px){.elementor-nav-menu--dropdown-tablet .elementor-menu-toggle,.elementor-nav-menu--dropdown-tablet .elementor-nav-menu--dropdown{display:none}}@media (max-width:1024px){.elementor-nav-menu--dropdown-tablet .elementor-nav-menu--main{display:none}}.elementor-widget-posts:after{display:none}.elementor-posts-container:not(.elementor-posts-masonry){-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch}.elementor-posts-container .elementor-post{padding:0;margin:0}.elementor-posts-container .elementor-post__thumbnail{overflow:hidden}.elementor-posts-container .elementor-post__thumbnail img{display:block;width:100%;max-height:none;max-width:none}.elementor-posts-container .elementor-post__thumbnail__link{position:relative;display:block;width:100%}.elementor-posts .elementor-post{display:-webkit-box;display:-ms-flexbox;display:flex}.elementor-posts .elementor-post__title{font-size:18px;margin:0}.elementor-posts .elementor-post__excerpt{margin-bottom:10px}.elementor-posts .elementor-post__excerpt p{margin:0;line-height:1.5em;font-size:14px;color:#777}.elementor-posts .elementor-post__meta-data{line-height:1.3em;font-size:12px;margin-bottom:13px;color:#adadad}.elementor-posts .elementor-post__thumbnail{position:relative}.elementor-posts--skin-classic{display:grid;-ms-flex-wrap:wrap;flex-wrap:wrap}.elementor-posts--skin-classic:not(.elementor-posts-masonry){-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch}.elementor-posts--skin-classic .elementor-post{overflow:hidden}.elementor-posts--skin-classic .elementor-post__text{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.elementor-posts--align-left .elementor-post{text-align:left}.elementor-posts--thumbnail-left .elementor-post__thumbnail__link{-ms-flex-negative:0;flex-shrink:0;width:25%}.elementor-posts--thumbnail-left .elementor-post__thumbnail__link{-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0;margin-right:20px}</style>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Playfair%20Display%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair%20Display%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="preload" href="https://fonts.googleapis.com/css?family=Playfair%20Display%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'"></noscript>
+	<link rel="canonical" href="https://www.suroboyo.web.id/en/tag/jendral-mallaby/">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="jendral mallaby Archives - The Suroboyo Heritage Trail">
+	<meta property="og:url" content="https://www.suroboyo.web.id/en/tag/jendral-mallaby/">
+	<meta property="og:site_name" content="The Suroboyo Heritage Trail">
+	<meta name="twitter:card" content="summary_large_image">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.suroboyo.web.id/#website","url":"https://www.suroboyo.web.id/","name":"The Suroboyo Heritage Trail","description":"Est. 1971","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.suroboyo.web.id/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"CollectionPage","@id":"https://www.suroboyo.web.id/en/tag/jendral-mallaby/#webpage","url":"https://www.suroboyo.web.id/en/tag/jendral-mallaby/","name":"jendral mallaby Archives - The Suroboyo Heritage Trail","isPartOf":{"@id":"https://www.suroboyo.web.id/#website"},"breadcrumb":{"@id":"https://www.suroboyo.web.id/en/tag/jendral-mallaby/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.suroboyo.web.id/en/tag/jendral-mallaby/"]}]},{"@type":"BreadcrumbList","@id":"https://www.suroboyo.web.id/en/tag/jendral-mallaby/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.suroboyo.web.id/"},{"@type":"ListItem","position":2,"name":"jendral mallaby"}]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="dns-prefetch" href="//img.suroboyo.web.id">
+<link href="https://fonts.gstatic.com/" crossorigin rel="preconnect">
+<link href="https://img.suroboyo.web.id/" rel="preconnect">
+<link rel="alternate" type="application/rss+xml" title="The Suroboyo Heritage Trail &raquo; Feed" href="https://www.suroboyo.web.id/en/feed/">
+<link rel="alternate" type="application/rss+xml" title="The Suroboyo Heritage Trail &raquo; Comments Feed" href="https://www.suroboyo.web.id/en/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="The Suroboyo Heritage Trail &raquo; jendral mallaby Tag Feed" href="https://www.suroboyo.web.id/en/tag/jendral-mallaby/feed/">
+<style type="text/css">img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}</style>
+	<link rel="preload" href="https://www.suroboyo.web.id/wp-includes/css/dist/block-library/style.min.css?ver=5.8.1" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/css/trp-language-switcher.css?ver=2.1.2" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/themes/hello-elementor/style.min.css?ver=2.4.1" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/themes/hello-elementor/theme.min.css?ver=2.4.1" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.4.4" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<style id="elementor-frontend-inline-css" type="text/css">@font-face{font-family:eicons;src:url(https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5.10.0);src:url(https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5.10.0#iefix) format("embedded-opentype"),url(https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff2?5.10.0) format("woff2"),url(https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff?5.10.0) format("woff"),url(https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.ttf?5.10.0) format("truetype"),url(https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.svg?5.10.0#eicon) format("svg");font-weight:400;font-style:normal}</style>
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-6.css?ver=1631739063" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/frontend-lite.min.css?ver=3.3.7" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css?ver=3.4.4" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css?ver=3.4.4" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/global.css?ver=1631739064" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-17.css?ver=1631739064" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-105.css?ver=1631739064" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-114.css?ver=1631956689" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/wp-search-with-algolia/css/algolia-autocomplete.css?ver=2.1.0" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/themes/hello-theme-child-master/style.css?ver=1.0.0" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css?ver=5.15.3" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/brands.min.css?ver=5.15.3" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css?ver=5.15.3" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-includes/js/jquery/jquery.min.js?ver=3.6.0" id="jquery-core-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2" id="jquery-migrate-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js?ver=3.4.4" id="font-awesome-4-shim-js" defer></script>
+<link rel="https://api.w.org/" href="https://www.suroboyo.web.id/en/wp-json/">
+<link rel="alternate" type="application/json" href="https://www.suroboyo.web.id/en/wp-json/wp/v2/tags/21">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.suroboyo.web.id/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.suroboyo.web.id/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.1">
+<link rel="alternate" hreflang="id-ID" href="https://www.suroboyo.web.id/tag/jendral-mallaby/">
+<link rel="alternate" hreflang="id" href="https://www.suroboyo.web.id/tag/jendral-mallaby/">
+<link rel="alternate" hreflang="en-US" href="https://www.suroboyo.web.id/en/tag/jendral-mallaby/">
+<link rel="alternate" hreflang="en" href="https://www.suroboyo.web.id/en/tag/jendral-mallaby/">
+<meta property="fb:app_id" content="3432265873563248">		<style>.algolia-search-highlight {
+				background-color: #fffbcc;
+				border-radius: 2px;
+				font-style: normal;
+			}</style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
+<script type="rocketlazyloadscript">
+/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+(function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){}}
+var rp=loadCSS.relpreload={};rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1}
+return function(){return ret}})();rp.bindMediaToggle=function(link){var finalMedia=link.media||"all";function enableStylesheet(){link.media=finalMedia}
+if(link.addEventListener){link.addEventListener("load",enableStylesheet)}else if(link.attachEvent){link.attachEvent("onload",enableStylesheet)}
+setTimeout(function(){link.rel="stylesheet";link.media="only x"});setTimeout(enableStylesheet,3000)};rp.poly=function(){if(rp.support()){return}
+var links=w.document.getElementsByTagName("link");for(var i=0;i<links.length;i++){var link=links[i];if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){link.setAttribute("data-loadcss",!0);rp.bindMediaToggle(link)}}};if(!rp.support()){rp.poly();var run=w.setInterval(rp.poly,500);if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run)})}else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run)})}}
+if(typeof exports!=="undefined"){exports.loadCSS=loadCSS}
+else{w.loadCSS=loadCSS}}(typeof global!=="undefined"?global:this))
+</script>
+</head>
+<body class="archive tag tag-jendral-mallaby tag-21 wp-custom-logo translatepress-en_US elementor-default elementor-template-full-width elementor-kit-6 elementor-page-114">
+
+		<div data-elementor-type="header" data-elementor-id="17" class="elementor elementor-17 elementor-location-header" data-elementor-settings="[]">
+		<div class="elementor-section-wrap">
+					<section class="elementor-section elementor-top-section elementor-element elementor-element-57559939 elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="57559939" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-32a3bd4f" data-id="32a3bd4f" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<section class="elementor-section elementor-inner-section elementor-element elementor-element-647a725 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="647a725" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-2e6d636" data-id="2e6d636" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-f290b0a elementor-shape-square elementor-grid-mobile-0 e-grid-align-mobile-center elementor-hidden-phone elementor-grid-0 e-grid-align-center elementor-widget elementor-widget-social-icons" data-id="f290b0a" data-element_type="widget" data-widget_type="social-icons.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.4.4 - 13-09-2021 */
+.elementor-widget-social-icons.elementor-grid-0 .elementor-widget-container,.elementor-widget-social-icons.elementor-grid-mobile-0 .elementor-widget-container,.elementor-widget-social-icons.elementor-grid-tablet-0 .elementor-widget-container{line-height:1;font-size:0}.elementor-widget-social-icons:not(.elementor-grid-0):not(.elementor-grid-tablet-0):not(.elementor-grid-mobile-0) .elementor-grid{display:inline-grid}.elementor-widget-social-icons .elementor-grid{grid-column-gap:var(--grid-column-gap,5px);grid-row-gap:var(--grid-row-gap,5px);grid-template-columns:var(--grid-template-columns);-webkit-box-pack:var(--justify-content,center);-ms-flex-pack:var(--justify-content,center);justify-content:var(--justify-content,center);justify-items:var(--justify-content,center)}.elementor-icon.elementor-social-icon{font-size:var(--icon-size,25px);line-height:var(--icon-size,25px);width:calc(var(--icon-size, 25px) + (2 * var(--icon-padding, .5em)));height:calc(var(--icon-size, 25px) + (2 * var(--icon-padding, .5em)))}.elementor-social-icon{--e-social-icon-icon-color:#fff;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;background-color:#818a91;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center;cursor:pointer}.elementor-social-icon i{color:var(--e-social-icon-icon-color)}.elementor-social-icon svg{fill:var(--e-social-icon-icon-color)}.elementor-social-icon:last-child{margin:0}.elementor-social-icon:hover{opacity:.9;color:#fff}.elementor-social-icon-android{background-color:#a4c639}.elementor-social-icon-apple{background-color:#999}.elementor-social-icon-behance{background-color:#1769ff}.elementor-social-icon-bitbucket{background-color:#205081}.elementor-social-icon-codepen{background-color:#000}.elementor-social-icon-delicious{background-color:#39f}.elementor-social-icon-deviantart{background-color:#05cc47}.elementor-social-icon-digg{background-color:#005be2}.elementor-social-icon-dribbble{background-color:#ea4c89}.elementor-social-icon-elementor{background-color:#d30c5c}.elementor-social-icon-envelope{background-color:#ea4335}.elementor-social-icon-facebook,.elementor-social-icon-facebook-f{background-color:#3b5998}.elementor-social-icon-flickr{background-color:#0063dc}.elementor-social-icon-foursquare{background-color:#2d5be3}.elementor-social-icon-free-code-camp,.elementor-social-icon-freecodecamp{background-color:#006400}.elementor-social-icon-github{background-color:#333}.elementor-social-icon-gitlab{background-color:#e24329}.elementor-social-icon-globe{background-color:#818a91}.elementor-social-icon-google-plus,.elementor-social-icon-google-plus-g{background-color:#dd4b39}.elementor-social-icon-houzz{background-color:#7ac142}.elementor-social-icon-instagram{background-color:#262626}.elementor-social-icon-jsfiddle{background-color:#487aa2}.elementor-social-icon-link{background-color:#818a91}.elementor-social-icon-linkedin,.elementor-social-icon-linkedin-in{background-color:#0077b5}.elementor-social-icon-medium{background-color:#00ab6b}.elementor-social-icon-meetup{background-color:#ec1c40}.elementor-social-icon-mixcloud{background-color:#273a4b}.elementor-social-icon-odnoklassniki{background-color:#f4731c}.elementor-social-icon-pinterest{background-color:#bd081c}.elementor-social-icon-product-hunt{background-color:#da552f}.elementor-social-icon-reddit{background-color:#ff4500}.elementor-social-icon-rss{background-color:#f26522}.elementor-social-icon-shopping-cart{background-color:#4caf50}.elementor-social-icon-skype{background-color:#00aff0}.elementor-social-icon-slideshare{background-color:#0077b5}.elementor-social-icon-snapchat{background-color:#fffc00}.elementor-social-icon-soundcloud{background-color:#f80}.elementor-social-icon-spotify{background-color:#2ebd59}.elementor-social-icon-stack-overflow{background-color:#fe7a15}.elementor-social-icon-steam{background-color:#00adee}.elementor-social-icon-stumbleupon{background-color:#eb4924}.elementor-social-icon-telegram{background-color:#2ca5e0}.elementor-social-icon-thumb-tack{background-color:#1aa1d8}.elementor-social-icon-tripadvisor{background-color:#589442}.elementor-social-icon-tumblr{background-color:#35465c}.elementor-social-icon-twitch{background-color:#6441a5}.elementor-social-icon-twitter{background-color:#1da1f2}.elementor-social-icon-viber{background-color:#665cac}.elementor-social-icon-vimeo{background-color:#1ab7ea}.elementor-social-icon-vk{background-color:#45668e}.elementor-social-icon-weibo{background-color:#dd2430}.elementor-social-icon-weixin{background-color:#31a918}.elementor-social-icon-whatsapp{background-color:#25d366}.elementor-social-icon-wordpress{background-color:#21759b}.elementor-social-icon-xing{background-color:#026466}.elementor-social-icon-yelp{background-color:#af0606}.elementor-social-icon-youtube{background-color:#cd201f}.elementor-social-icon-500px{background-color:#0099e5}.elementor-shape-rounded .elementor-icon.elementor-social-icon{-webkit-border-radius:10%;border-radius:10%}.elementor-shape-circle .elementor-icon.elementor-social-icon{-webkit-border-radius:50%;border-radius:50%}</style>		<div class="elementor-social-icons-wrapper elementor-grid">
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-facebook elementor-repeater-item-bfc27f9" target="_blank">
+						<span class="elementor-screen-only">Facebook</span>
+						<i class="fab fa-facebook"></i>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-63c1b25" target="_blank">
+						<span class="elementor-screen-only">Twitter</span>
+						<i class="fab fa-twitter"></i>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-youtube elementor-repeater-item-00a63bb" target="_blank">
+						<span class="elementor-screen-only">Youtube</span>
+						<i class="fab fa-youtube"></i>					</a>
+				</span>
+					</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-d112240" data-id="d112240" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-11d500f9 elementor-widget elementor-widget-theme-site-logo elementor-widget-image" data-id="11d500f9" data-element_type="widget" data-widget_type="theme-site-logo.default">
+				<div class="elementor-widget-container">
+																<a href="https://www.suroboyo.web.id/en">
+							<img width="414" height="173" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20414%20173'%3E%3C/svg%3E" class="attachment-full size-full" alt="logo suroboyo" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo.png 414w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo-300x125.png 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo-16x7.png 16w" data-lazy-sizes="(max-width: 414px) 100vw, 414px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo.png"><noscript><img width="414" height="173" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo.png" class="attachment-full size-full" alt="logo suroboyo" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo.png 414w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo-300x125.png 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/logo-suroboyo-16x7.png 16w" sizes="(max-width: 414px) 100vw, 414px"></noscript>								</a>
+															</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-fccb164" data-id="fccb164" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-82cf742 elementor-search-form--skin-minimal elementor-widget elementor-widget-search-form" data-id="82cf742" data-element_type="widget" data-settings="{&quot;skin&quot;:&quot;minimal&quot;}" data-widget_type="search-form.default">
+				<div class="elementor-widget-container">
+					<form class="elementor-search-form" role="search" action="https://www.suroboyo.web.id/en" method="get" data-trp-original-action="https://www.suroboyo.web.id/en">
+									<div class="elementor-search-form__container">
+									<div class="elementor-search-form__icon">
+						<i aria-hidden="true" class="fas fa-search"></i>						<span class="elementor-screen-only" data-no-translation="" data-trp-gettext="">Search</span>
+					</div>
+								<input placeholder="Search..." class="elementor-search-form__input" type="search" name="s" title="Search" value="" data-no-translation-title="">
+															</div>
+		<input type="hidden" name="trp-form-language" value="en">
+</form>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<div class="elementor-element elementor-element-436af1ee elementor-nav-menu__align-center elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="436af1ee" data-element_type="widget" data-settings="{&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+			<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'">			<nav migration_allowed="1" migrated="0" role="navigation" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-double-line e--animation-drop-in"><ul id="menu-1-436af1ee" class="elementor-nav-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-39"><a href="https://www.suroboyo.web.id/en/" class="elementor-item">Front</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-41">
+<a href="#" class="elementor-item elementor-item-anchor">History of Surabaya</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38"><a href="https://www.suroboyo.web.id/en/penetapan-hari-jadi-surabaya/" class="elementor-sub-item">Surabaya Anniversary</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="https://www.suroboyo.web.id/en/mitos-surabaya/" class="elementor-sub-item">Myth of Surabaya</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-40"><a href="https://www.suroboyo.web.id/en/jejak-peninggalan-sejarah/" class="elementor-item">Traces of History</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-134"><a href="#about" class="elementor-item elementor-item-anchor">About Us</a></li>
+<li class="trp-language-switcher-container menu-item menu-item-type-post_type menu-item-object-language_switcher menu-item-has-children current-language-menu-item menu-item-80">
+<a href="https://www.suroboyo.web.id/en/tag/jendral-mallaby/" class="elementor-item"><span data-no-translation><img class="trp-flag-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2018%2012'%3E%3C/svg%3E" width="18" height="12" alt="en_US" title="English" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/en_US.png"><noscript><img class="trp-flag-image" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/en_US.png" width="18" height="12" alt="en_US" title="English"></noscript>
+<span class="trp-ls-language-name">English</span></span></a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="trp-language-switcher-container menu-item menu-item-type-post_type menu-item-object-language_switcher menu-item-82"><a href="https://www.suroboyo.web.id/tag/jendral-mallaby/" class="elementor-sub-item elementor-item-anchor"><span data-no-translation><img class="trp-flag-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2018%2012'%3E%3C/svg%3E" width="18" height="12" alt="id_ID" title="Indonesian" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/id_ID.png"><noscript><img class="trp-flag-image" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/id_ID.png" width="18" height="12" alt="id_ID" title="Indonesian"></noscript>
+<span class="trp-ls-language-name">Indonesian</span></span></a></li>
+</ul>
+</li>
+</ul></nav>
+					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false" data-no-translation-aria-label="">
+			<i class="eicon-menu-bar" aria-hidden="true" role="presentation"></i>
+			<span class="elementor-screen-only" data-no-translation="" data-trp-gettext="">Menu</span>
+		</div>
+			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true"><ul id="menu-2-436af1ee" class="elementor-nav-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-39"><a href="https://www.suroboyo.web.id/en/" class="elementor-item" tabindex="-1">Front</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-41">
+<a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">History of Surabaya</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38"><a href="https://www.suroboyo.web.id/en/penetapan-hari-jadi-surabaya/" class="elementor-sub-item" tabindex="-1">Surabaya Anniversary</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="https://www.suroboyo.web.id/en/mitos-surabaya/" class="elementor-sub-item" tabindex="-1">Myth of Surabaya</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-40"><a href="https://www.suroboyo.web.id/en/jejak-peninggalan-sejarah/" class="elementor-item" tabindex="-1">Traces of History</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-134"><a href="#about" class="elementor-item elementor-item-anchor" tabindex="-1">About Us</a></li>
+<li class="trp-language-switcher-container menu-item menu-item-type-post_type menu-item-object-language_switcher menu-item-has-children current-language-menu-item menu-item-80">
+<a href="https://www.suroboyo.web.id/en/tag/jendral-mallaby/" class="elementor-item" tabindex="-1"><span data-no-translation><img class="trp-flag-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2018%2012'%3E%3C/svg%3E" width="18" height="12" alt="en_US" title="English" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/en_US.png"><noscript><img class="trp-flag-image" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/en_US.png" width="18" height="12" alt="en_US" title="English"></noscript>
+<span class="trp-ls-language-name">English</span></span></a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="trp-language-switcher-container menu-item menu-item-type-post_type menu-item-object-language_switcher menu-item-82"><a href="https://www.suroboyo.web.id/tag/jendral-mallaby/" class="elementor-sub-item elementor-item-anchor" tabindex="-1"><span data-no-translation><img class="trp-flag-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2018%2012'%3E%3C/svg%3E" width="18" height="12" alt="id_ID" title="Indonesian" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/id_ID.png"><noscript><img class="trp-flag-image" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/images/flags/id_ID.png" width="18" height="12" alt="id_ID" title="Indonesian"></noscript>
+<span class="trp-ls-language-name">Indonesian</span></span></a></li>
+</ul>
+</li>
+</ul></nav>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				</div>
+		</div>
+				<div data-elementor-type="archive" data-elementor-id="114" class="elementor elementor-114 elementor-location-archive" data-elementor-settings="[]">
+		<div class="elementor-section-wrap">
+					<section class="elementor-section elementor-top-section elementor-element elementor-element-4537fe35 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="4537fe35" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-2c7dd516" data-id="2c7dd516" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<section class="elementor-section elementor-inner-section elementor-element elementor-element-63173338 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default" data-id="63173338" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-2c845afa" data-id="2c845afa" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-5867f1eb elementor-widget elementor-widget-theme-archive-title elementor-page-title elementor-widget-heading" data-id="5867f1eb" data-element_type="widget" data-widget_type="theme-archive-title.default">
+				<div class="elementor-widget-container">
+			<h1 class="elementor-heading-title elementor-size-default">general mallaby</h1>		</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-11de6b0e" data-id="11de6b0e" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-2704e33a elementor-widget elementor-widget-image" data-id="2704e33a" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.4.4 - 13-09-2021 */
+.elementor-widget-image{text-align:center}.elementor-widget-image a{display:inline-block}.elementor-widget-image a img[src$=".svg"]{width:48px}.elementor-widget-image img{vertical-align:middle;display:inline-block}</style>												<img width="910" height="370" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20910%20370'%3E%3C/svg%3E" class="attachment-full size-full" alt="Suro Boyo" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo.jpeg 910w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo-300x122.jpeg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo-768x312.jpeg 768w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo-16x7.jpeg 16w" data-lazy-sizes="(max-width: 910px) 100vw, 910px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo.jpeg"><noscript><img width="910" height="370" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo.jpeg" class="attachment-full size-full" alt="Suro Boyo" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo.jpeg 910w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo-300x122.jpeg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo-768x312.jpeg 768w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/suroboyo-16x7.jpeg 16w" sizes="(max-width: 910px) 100vw, 910px"></noscript>															</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-40f48349 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="40f48349" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-66 elementor-top-column elementor-element elementor-element-11fa6e52" data-id="11fa6e52" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-7c703d58 elementor-grid-1 elementor-posts--thumbnail-left elementor-posts--align-left elementor-grid-tablet-1 elementor-grid-mobile-1 elementor-widget elementor-widget-posts" data-id="7c703d58" data-element_type="widget" data-settings="{&quot;classic_columns&quot;:&quot;1&quot;,&quot;classic_row_gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;50&quot;,&quot;sizes&quot;:[]},&quot;classic_columns_tablet&quot;:&quot;1&quot;,&quot;classic_columns_mobile&quot;:&quot;1&quot;}" data-widget_type="posts.classic">
+				<div class="elementor-widget-container">
+			<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/widget-posts.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'">		<div class="elementor-posts-container elementor-posts elementor-posts--skin-classic elementor-grid">
+				<article class="elementor-post elementor-grid-item post-334 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-jembatan-merah tag-jendral-mallaby">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/jembatan-merah/">
+			<div class="elementor-post__thumbnail">
+<img width="700" height="507" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20700%20507'%3E%3C/svg%3E" class="attachment-full size-full" alt="jembatan merah 1880-1900" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg 700w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-300x217.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-16x12.jpg 16w" data-lazy-sizes="(max-width: 700px) 100vw, 700px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg"><noscript><img width="700" height="507" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg" class="attachment-full size-full" alt="jembatan merah 1880-1900" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg 700w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-300x217.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-16x12.jpg 16w" sizes="(max-width: 700px) 100vw, 700px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/jembatan-merah/">
+				Red Bridge			</a>
+		</h3>
+				<div class="elementor-post__meta-data">
+					<span class="elementor-post-date">
+			22/07/2021		</span>
+				<span class="elementor-post-avatar">
+			No Comments		</span>
+				</div>
+				<div class="elementor-post__excerpt">
+			<p>The Red Bridge was built in the 1890s. The bridge is a link between Jalan Rajawali and Jalan Kembang Jepun. The Red Bridge was built over the Kalimas river. There are at least two versions</p>
+		</div>
+				</div>
+				</article>
+				<article class="elementor-post elementor-grid-item post-257 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-monumen-resolusi-jihad tag-nahdlatul-ulama tag-resolusi-jihad tag-resolusi-jihad-nu">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/monumen-resolusi-jihad/">
+			<div class="elementor-post__thumbnail">
+<img width="548" height="295" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20548%20295'%3E%3C/svg%3E" class="attachment-full size-full" alt="resolusi-jihad" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg 548w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-300x161.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-16x9.jpg 16w" data-lazy-sizes="(max-width: 548px) 100vw, 548px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg"><noscript><img width="548" height="295" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg" class="attachment-full size-full" alt="resolusi-jihad" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg 548w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-300x161.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-16x9.jpg 16w" sizes="(max-width: 548px) 100vw, 548px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/monumen-resolusi-jihad/">
+				Jihad Resolution Monument			</a>
+		</h3>
+				<div class="elementor-post__meta-data">
+					<span class="elementor-post-date">
+			07/01/2021		</span>
+				<span class="elementor-post-avatar">
+			No Comments		</span>
+				</div>
+				<div class="elementor-post__excerpt">
+			<p>The Jihad Resolution Monument was inaugurated on October 23, 2011, to commemorate the history of the battle in Surabaya which is inseparable from the role of &quot;NU Jihad Resolution&quot;.</p>
+		</div>
+				</div>
+				</article>
+				<article class="elementor-post elementor-grid-item post-142 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-bung-tomo tag-monumen-pers-perjuangan-surabaya tag-toko-kwang tag-toko-nam tag-toko-simpangsche-bazaar">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/monumen-pers-perjuangan-surabaya/">
+			<div class="elementor-post__thumbnail">
+<img width="696" height="396" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20696%20396'%3E%3C/svg%3E" class="attachment-full size-full" alt="gedung monumen pers perjuangan surabaya 1940-1945" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg 696w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-300x171.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-16x9.jpg 16w" data-lazy-sizes="(max-width: 696px) 100vw, 696px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg"><noscript><img width="696" height="396" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg" class="attachment-full size-full" alt="gedung monumen pers perjuangan surabaya 1940-1945" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg 696w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-300x171.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-16x9.jpg 16w" sizes="(max-width: 696px) 100vw, 696px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/monumen-pers-perjuangan-surabaya/">
+				Surabaya Struggle Press Monument			</a>
+		</h3>
+				<div class="elementor-post__meta-data">
+					<span class="elementor-post-date">
+			02/01/2021		</span>
+				<span class="elementor-post-avatar">
+			No Comments		</span>
+				</div>
+				<div class="elementor-post__excerpt">
+			<p>The Surabaya Struggle Press Monument building is located across the street from the Majapahit Hotel. It used to be the Simpangche Bazaar Store, then it became the Nam Shop and the Kwang Store.</p>
+		</div>
+				</div>
+				</article>
+				<article class="elementor-post elementor-grid-item post-48 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-tugu-pahlawan">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/tugu-pahlawan/">
+			<div class="elementor-post__thumbnail">
+<img width="1024" height="658" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20658'%3E%3C/svg%3E" class="attachment-full size-full" alt="Tugu Pahlawan" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg 1024w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-300x193.jpeg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-768x494.jpeg 768w" data-lazy-sizes="(max-width: 1024px) 100vw, 1024px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg"><noscript><img width="1024" height="658" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg" class="attachment-full size-full" alt="Tugu Pahlawan" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg 1024w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-300x193.jpeg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-768x494.jpeg 768w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/tugu-pahlawan/">
+				Heroes Monument			</a>
+		</h3>
+				<div class="elementor-post__meta-data">
+					<span class="elementor-post-date">
+			30/12/2020		</span>
+				<span class="elementor-post-avatar">
+			No Comments		</span>
+				</div>
+				<div class="elementor-post__excerpt">
+			<p>Tugu Pahlawan is a monument built to commemorate the services of heroes who fought to defend Indonesia&#039;s independence in Surabaya.</p>
+		</div>
+				</div>
+				</article>
+				</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-4a3b4a70" data-id="4a3b4a70" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<section class="elementor-section elementor-inner-section elementor-element elementor-element-2a239c6a elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="2a239c6a" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-1990b494" data-id="1990b494" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-441805f5 elementor-widget elementor-widget-heading" data-id="441805f5" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.4.4 - 13-09-2021 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style>
+<h3 class="elementor-heading-title elementor-size-default">Subscribe to Get Notifications for Latest Articles</h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-21577420 elementor-widget elementor-widget-text-editor" data-id="21577420" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.4.4 - 13-09-2021 */
+.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#818a91;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#818a91;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>				<p>Not spam, we will only send notifications if there are new articles that we post.</p>						</div>
+				</div>
+				<div class="elementor-element elementor-element-49486d7e elementor-button-align-stretch elementor-widget elementor-widget-form" data-id="49486d7e" data-element_type="widget" data-settings="{&quot;step_next_label&quot;:&quot;Next&quot;,&quot;step_previous_label&quot;:&quot;Previous&quot;,&quot;button_width&quot;:&quot;100&quot;,&quot;step_type&quot;:&quot;number_text&quot;,&quot;step_icon_shape&quot;:&quot;circle&quot;}" data-widget_type="form.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor-pro - v3.3.7 - 15-08-2021 */
+.elementor-button.elementor-hidden,.elementor-hidden{display:none}.e-form__step{width:100%}.e-form__step:not(.elementor-hidden){display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.e-form__buttons{-ms-flex-wrap:wrap;flex-wrap:wrap}.e-form__buttons,.e-form__buttons__wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}.e-form__indicators{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-wrap:nowrap;flex-wrap:nowrap;font-size:13px;margin-bottom:var(--e-form-steps-indicators-spacing)}.e-form__indicators,.e-form__indicators__indicator{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.e-form__indicators__indicator{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-ms-flex-preferred-size:0;flex-basis:0;padding:0 var(--e-form-steps-divider-gap)}.e-form__indicators__indicator__progress{width:100%;position:relative;background-color:var(--e-form-steps-indicator-progress-background-color);border-radius:var(--e-form-steps-indicator-progress-border-radius);overflow:hidden}.e-form__indicators__indicator__progress__meter{width:var(--e-form-steps-indicator-progress-meter-width,0);height:var(--e-form-steps-indicator-progress-height);line-height:var(--e-form-steps-indicator-progress-height);padding-right:15px;border-radius:var(--e-form-steps-indicator-progress-border-radius);background-color:var(--e-form-steps-indicator-progress-color);color:var(--e-form-steps-indicator-progress-meter-color);text-align:right;-webkit-transition:width .1s linear;-o-transition:width .1s linear;transition:width .1s linear}.e-form__indicators__indicator:first-child{padding-left:0}.e-form__indicators__indicator:last-child{padding-right:0}.e-form__indicators__indicator--state-inactive{color:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-inactive [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-inactive-secondary-color,#fff)}.e-form__indicators__indicator--state-inactive object,.e-form__indicators__indicator--state-inactive svg{fill:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-active{color:var(--e-form-steps-indicator-active-primary-color,#39b54a);border-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active object,.e-form__indicators__indicator--state-active svg{fill:var(--e-form-steps-indicator-active-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed{color:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator--state-completed [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator__label{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator--shape-none{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a);background-color:initial}.e-form__indicators__indicator--state-completed object,.e-form__indicators__indicator--state-completed svg{fill:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator__icon{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);font-size:var(--e-form-steps-indicator-icon-size);border-width:1px;border-style:solid;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;overflow:hidden;margin-bottom:10px}.e-form__indicators__indicator__icon img,.e-form__indicators__indicator__icon object,.e-form__indicators__indicator__icon svg{width:var(--e-form-steps-indicator-icon-size);height:auto}.e-form__indicators__indicator__icon .e-font-icon-svg{height:1em}.e-form__indicators__indicator__number{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);border-width:1px;border-style:solid;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-bottom:10px}.e-form__indicators__indicator--shape-circle{border-radius:50%}.e-form__indicators__indicator--shape-square{border-radius:0}.e-form__indicators__indicator--shape-rounded{border-radius:5px}.e-form__indicators__indicator--shape-none{border:0}.e-form__indicators__indicator__label{text-align:center}.e-form__indicators__indicator__separator{width:100%;height:var(--e-form-steps-divider-width);background-color:#c2cbd2}.e-form__indicators--type-icon,.e-form__indicators--type-icon_text,.e-form__indicators--type-number,.e-form__indicators--type-number_text{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.e-form__indicators--type-icon .e-form__indicators__indicator__separator,.e-form__indicators--type-icon_text .e-form__indicators__indicator__separator,.e-form__indicators--type-number .e-form__indicators__indicator__separator,.e-form__indicators--type-number_text .e-form__indicators__indicator__separator{margin-top:calc(var(--e-form-steps-indicator-padding, 30px) / 2 - var(--e-form-steps-divider-width, 1px) / 2)}.elementor-field-type-hidden{display:none}.elementor-field-type-html{display:inline-block}.elementor-login .elementor-lost-password,.elementor-login .elementor-remember-me{font-size:.85em}.elementor-field-type-recaptcha_v3 .elementor-field-label{display:none}.elementor-button .elementor-form-spinner{-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3}.elementor-form .elementor-button>span{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.elementor-form .elementor-button .elementor-button-text{white-space:normal;-webkit-box-flex:0;-ms-flex-positive:0;flex-grow:0}.elementor-form .elementor-button svg{height:auto}.elementor-form .elementor-button .e-font-icon-svg{height:1em}</style>		<form class="elementor-form" method="post" name="New Form">
+			<input type="hidden" name="post_id" value="114">
+			<input type="hidden" name="form_id" value="49486d7e">
+			<input type="hidden" name="referer_title" value="jendral mallaby Archives - The Suroboyo Heritage Trail">
+
+			
+			<div class="elementor-form-fields-wrapper elementor-labels-">
+								<div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-100 elementor-field-required">
+					<label for="form-field-email" class="elementor-field-label elementor-screen-only">Your email</label><input size="1" type="email" name="form_fields[email]" id="form-field-email" class="elementor-field elementor-size-sm  elementor-field-textual" placeholder="Your email" required="required" aria-required="true">				</div>
+								<div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
+					<button type="submit" class="elementor-button elementor-size-sm">
+						<span>
+															<span class="elementor-button-icon">
+																										</span>
+																						<span class="elementor-button-text">Subscribe</span>
+													</span>
+					</button>
+				</div>
+			</div>
+		<input type="hidden" name="trp-form-language" value="en">
+</form>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-1e37ba1 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="1e37ba1" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5c20d0b1" data-id="5c20d0b1" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<section class="elementor-section elementor-inner-section elementor-element elementor-element-6c4de900 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="6c4de900" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-25a22a7a" data-id="25a22a7a" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-47eefcab elementor-widget elementor-widget-heading" data-id="47eefcab" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">Must read:</h2>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-77ec8e17" data-id="77ec8e17" data-element_type="column">
+			<div class="elementor-widget-wrap">
+									</div>
+		</div>
+							</div>
+		</section>
+				<div class="elementor-element elementor-element-2291040a elementor-grid-4 elementor-grid-tablet-2 elementor-grid-mobile-1 elementor-posts--thumbnail-top elementor-widget elementor-widget-posts" data-id="2291040a" data-element_type="widget" data-settings="{&quot;classic_columns&quot;:&quot;4&quot;,&quot;classic_row_gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;40&quot;,&quot;sizes&quot;:[]},&quot;classic_columns_tablet&quot;:&quot;2&quot;,&quot;classic_columns_mobile&quot;:&quot;1&quot;}" data-widget_type="posts.classic">
+				<div class="elementor-widget-container">
+					<div class="elementor-posts-container elementor-posts elementor-posts--skin-classic elementor-grid">
+				<article class="elementor-post elementor-grid-item post-142 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-bung-tomo tag-monumen-pers-perjuangan-surabaya tag-toko-kwang tag-toko-nam tag-toko-simpangsche-bazaar">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/monumen-pers-perjuangan-surabaya/">
+			<div class="elementor-post__thumbnail">
+<img width="696" height="396" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20696%20396'%3E%3C/svg%3E" class="attachment-full size-full" alt="gedung monumen pers perjuangan surabaya 1940-1945" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg 696w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-300x171.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-16x9.jpg 16w" data-lazy-sizes="(max-width: 696px) 100vw, 696px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg"><noscript><img width="696" height="396" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg" class="attachment-full size-full" alt="gedung monumen pers perjuangan surabaya 1940-1945" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy.jpg 696w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-300x171.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/gedung-monumen-pers-perjuangan-surabaya-1940-1945-new-copy-16x9.jpg 16w" sizes="(max-width: 696px) 100vw, 696px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/monumen-pers-perjuangan-surabaya/">
+				Surabaya Struggle Press Monument			</a>
+		</h3>
+				<div class="elementor-post__excerpt">
+			<p>The Surabaya Struggle Press Monument building is located across the street from the Majapahit Hotel. It used to be the Simpangche Bazaar Store, then it became the Nam Shop and the Kwang Store.</p>
+		</div>
+				</div>
+				</article>
+				<article class="elementor-post elementor-grid-item post-257 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-monumen-resolusi-jihad tag-nahdlatul-ulama tag-resolusi-jihad tag-resolusi-jihad-nu">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/monumen-resolusi-jihad/">
+			<div class="elementor-post__thumbnail">
+<img width="548" height="295" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20548%20295'%3E%3C/svg%3E" class="attachment-full size-full" alt="resolusi-jihad" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg 548w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-300x161.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-16x9.jpg 16w" data-lazy-sizes="(max-width: 548px) 100vw, 548px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg"><noscript><img width="548" height="295" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg" class="attachment-full size-full" alt="resolusi-jihad" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad.jpg 548w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-300x161.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/resolusi-jihad-16x9.jpg 16w" sizes="(max-width: 548px) 100vw, 548px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/monumen-resolusi-jihad/">
+				Jihad Resolution Monument			</a>
+		</h3>
+				<div class="elementor-post__excerpt">
+			<p>The Jihad Resolution Monument was inaugurated on October 23, 2011, to commemorate the history of the battle in Surabaya which is inseparable from the role of &quot;NU Jihad Resolution&quot;.</p>
+		</div>
+				</div>
+				</article>
+				<article class="elementor-post elementor-grid-item post-334 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-jembatan-merah tag-jendral-mallaby">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/jembatan-merah/">
+			<div class="elementor-post__thumbnail">
+<img width="700" height="507" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20700%20507'%3E%3C/svg%3E" class="attachment-full size-full" alt="jembatan merah 1880-1900" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg 700w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-300x217.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-16x12.jpg 16w" data-lazy-sizes="(max-width: 700px) 100vw, 700px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg"><noscript><img width="700" height="507" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg" class="attachment-full size-full" alt="jembatan merah 1880-1900" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900.jpg 700w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-300x217.jpg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/07/jembatan-merah-1880-1900-16x12.jpg 16w" sizes="(max-width: 700px) 100vw, 700px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/jembatan-merah/">
+				Red Bridge			</a>
+		</h3>
+				<div class="elementor-post__excerpt">
+			<p>The Red Bridge was built in the 1890s. The bridge is a link between Jalan Rajawali and Jalan Kembang Jepun. The Red Bridge was built over the Kalimas river. There are at least two versions</p>
+		</div>
+				</div>
+				</article>
+				<article class="elementor-post elementor-grid-item post-48 post type-post status-publish format-standard has-post-thumbnail hentry category-jejak-peninggalan-sejarah tag-tugu-pahlawan">
+				<a class="elementor-post__thumbnail__link" href="https://www.suroboyo.web.id/en/tugu-pahlawan/">
+			<div class="elementor-post__thumbnail">
+<img width="1024" height="658" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20658'%3E%3C/svg%3E" class="attachment-full size-full" alt="Tugu Pahlawan" data-lazy-srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg 1024w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-300x193.jpeg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-768x494.jpeg 768w" data-lazy-sizes="(max-width: 1024px) 100vw, 1024px" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg"><noscript><img width="1024" height="658" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg" class="attachment-full size-full" alt="Tugu Pahlawan" srcset="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw.jpeg 1024w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-300x193.jpeg 300w, https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2020/12/Tugu_Pahlawan_Surabaya_bw-768x494.jpeg 768w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript>
+</div>
+		</a>
+				<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+			<a href="https://www.suroboyo.web.id/en/tugu-pahlawan/">
+				Heroes Monument			</a>
+		</h3>
+				<div class="elementor-post__excerpt">
+			<p>Tugu Pahlawan is a monument built to commemorate the services of heroes who fought to defend Indonesia&#039;s independence in Surabaya.</p>
+		</div>
+				</div>
+				</article>
+				</div>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				</div>
+		</div>
+				<div data-elementor-type="footer" data-elementor-id="105" class="elementor elementor-105 elementor-location-footer" data-elementor-settings="[]">
+		<div class="elementor-section-wrap">
+					<section class="elementor-section elementor-top-section elementor-element elementor-element-2b757f10 elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="2b757f10" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-2f7e6fdf" data-id="2f7e6fdf" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-24c2685 elementor-widget elementor-widget-menu-anchor" data-id="24c2685" data-element_type="widget" data-widget_type="menu-anchor.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.4.4 - 13-09-2021 */
+body.elementor-page .elementor-widget-menu-anchor{margin-bottom:0}</style>		<div id="about" class="elementor-menu-anchor"></div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-39feaa81 elementor-widget elementor-widget-heading" data-id="39feaa81" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h4 class="elementor-heading-title elementor-size-default">About Us</h4>		</div>
+				</div>
+				<div class="elementor-element elementor-element-6017d7ec elementor-widget elementor-widget-text-editor" data-id="6017d7ec" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+							<p>Site <b>“The Suroboyo Heritage Trail”</b> This program was created to provide information for the wider community regarding historical traces in the city of Surabaya. Both Surabaya residents, all beloved Indonesian citizens, and also for foreign tourists.</p>
+<p>Contact us if you have articles that can be shared here, or maybe just suggestions and criticism, we are happy to accept them.</p>						</div>
+				</div>
+				<div class="elementor-element elementor-element-5607f865 elementor-shape-circle e-grid-align-left e-grid-align-mobile-center elementor-grid-0 elementor-widget elementor-widget-social-icons" data-id="5607f865" data-element_type="widget" data-widget_type="social-icons.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-social-icons-wrapper elementor-grid">
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-facebook-f elementor-animation-grow elementor-repeater-item-4cd9d92" target="_blank">
+						<span class="elementor-screen-only">Facebook-f</span>
+						<i class="fab fa-facebook-f"></i>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-animation-grow elementor-repeater-item-b582169" target="_blank">
+						<span class="elementor-screen-only">Twitter</span>
+						<i class="fab fa-twitter"></i>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-animation-grow elementor-repeater-item-7f63e13" target="_blank">
+						<span class="elementor-screen-only">Instagram</span>
+						<i class="fab fa-instagram"></i>					</a>
+				</span>
+					</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-44723e2" data-id="44723e2" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-6fb2ec66 elementor-testimonial--skin-bubble elementor-testimonial--layout-image_inline elementor-testimonial--align-center elementor-pagination-type-bullets elementor-widget elementor-widget-testimonial-carousel" data-id="6fb2ec66" data-element_type="widget" data-settings="{&quot;space_between&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;pagination&quot;:&quot;bullets&quot;,&quot;speed&quot;:500,&quot;autoplay&quot;:&quot;yes&quot;,&quot;autoplay_speed&quot;:5000,&quot;loop&quot;:&quot;yes&quot;,&quot;pause_on_hover&quot;:&quot;yes&quot;,&quot;pause_on_interaction&quot;:&quot;yes&quot;,&quot;space_between_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;space_between_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]}}" data-widget_type="testimonial-carousel.default">
+				<div class="elementor-widget-container">
+			<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/widget-carousel.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'">		<div class="elementor-swiper">
+			<div class="elementor-main-swiper swiper-container">
+				<div class="swiper-wrapper">
+											<div class="swiper-slide">
+									<div class="elementor-testimonial">
+							<div class="elementor-testimonial__content">
+					<div class="elementor-testimonial__text">
+						I am slide content. Click the edit button to change this text. Lorem ipsum dolor sit amet, elite adipiscing consectetur. Ut elite tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.					</div>
+									</div>
+						<div class="elementor-testimonial__footer">
+									<div class="elementor-testimonial__image">
+						<img width="400" height="400" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20400'%3E%3C/svg%3E" alt="Amanda Lee" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/y8.png"><noscript><img width="400" height="400" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/y8.png" alt="Amanda Lee"></noscript>
+					</div>
+								<cite class="elementor-testimonial__cite"><span class="elementor-testimonial__name">Amanda Lee</span><span class="elementor-testimonial__title">Support Company</span></cite>			</div>
+		</div>
+								</div>
+											<div class="swiper-slide">
+									<div class="elementor-testimonial">
+							<div class="elementor-testimonial__content">
+					<div class="elementor-testimonial__text">
+						I am slide content. Click the edit button to change this text. Lorem ipsum dolor sit amet, elite adipiscing consectetur. Ut elite tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.					</div>
+									</div>
+						<div class="elementor-testimonial__footer">
+									<div class="elementor-testimonial__image">
+						<img width="400" height="400" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20400'%3E%3C/svg%3E" alt="Melisa Pomero" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/y9.png"><noscript><img width="400" height="400" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/y9.png" alt="Melisa Pomero"></noscript>
+					</div>
+								<cite class="elementor-testimonial__cite"><span class="elementor-testimonial__name">Melissa Pomero</span><span class="elementor-testimonial__title">Graphic Designer</span></cite>			</div>
+		</div>
+								</div>
+											<div class="swiper-slide">
+									<div class="elementor-testimonial">
+							<div class="elementor-testimonial__content">
+					<div class="elementor-testimonial__text">
+						I am slide content. Click the edit button to change this text. Lorem ipsum dolor sit amet, elite adipiscing consectetur. Ut elite tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.					</div>
+									</div>
+						<div class="elementor-testimonial__footer">
+									<div class="elementor-testimonial__image">
+						<img width="400" height="400" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20400'%3E%3C/svg%3E" alt="Mike Jonnaa" data-lazy-src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/y11.png"><noscript><img width="400" height="400" src="https://img.suroboyo.web.id/upload/q_75/https://www.suroboyo.web.id/wp-content/uploads/2021/01/y11.png" alt="Mike Jonnaa"></noscript>
+					</div>
+								<cite class="elementor-testimonial__cite"><span class="elementor-testimonial__name">Mike Jonna</span><span class="elementor-testimonial__title">Company Manager</span></cite>			</div>
+		</div>
+								</div>
+									</div>
+															<div class="swiper-pagination"></div>
+																	</div>
+		</div>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-650da9f9 elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="650da9f9" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-2416321e" data-id="2416321e" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-3b601e48 elementor-widget elementor-widget-heading" data-id="3b601e48" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default"><a href="https://www.tataweb.net/">2021 © All Rights Reserved. Design by TataWeb</a></h2>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-23435776" data-id="23435776" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+								<div class="elementor-element elementor-element-6c2bc036 elementor-view-default elementor-widget elementor-widget-icon" data-id="6c2bc036" data-element_type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-icon-wrapper">
+			<div class="elementor-icon elementor-animation-grow">
+							<i class="fa fa-angle-up" aria-hidden="true"></i>
+						</div>
+		</div>
+				</div>
+				</div>
+					</div>
+		</div>
+							</div>
+		</section>
+				</div>
+		</div>
+		
+<script type="rocketlazyloadscript" src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
+
+<script type="rocketlazyloadscript">
+  /* paste this in verbatim */
+  window.formbutton=window.formbutton||function(){(formbutton.q=formbutton.q||[]).push(arguments);};
+
+  /* customize formbutton here*/     
+  formbutton("create", {
+    action: "https://formspree.io/f/mrgorzll",
+    title: "Isok dibantu opo rek?",
+    fields: [
+      { 
+        type: "email", 
+        label: "Email:", 
+        name: "email",
+        required: true,
+        placeholder: "alamat@email.com"
+      },
+      {
+        type: "textarea",
+        label: "Pesan:",
+        name: "message",
+        placeholder: "Monggo tulis pesan sampeyan cak/ning.",
+      },
+      { type: "submit" }      
+    ],
+    styles: {
+      title: {
+        backgroundColor: "#6C7C69"
+      },
+      button: {
+        backgroundColor: "#6C7C69"
+      }
+    },
+    initiallyVisible: true
+  });
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">var algolia = {"debug":false,"application_id":"NR4S805BZA","search_api_key":"8979acf09612757accd8bd724e67c215","powered_by_enabled":true,"query":"","autocomplete":{"sources":[{"index_id":"posts_language_switcher","index_name":"sby_posts_language_switcher","label":"Language Switcher","admin_name":"Language Switcher","position":10,"max_suggestions":5,"tmpl_suggestion":"autocomplete-post-suggestion","enabled":true},{"index_id":"posts_post","index_name":"sby_posts_post","label":"Pos","admin_name":"Pos","position":10,"max_suggestions":5,"tmpl_suggestion":"autocomplete-post-suggestion","enabled":true},{"index_id":"posts_page","index_name":"sby_posts_page","label":"Laman","admin_name":"Laman","position":10,"max_suggestions":5,"tmpl_suggestion":"autocomplete-post-suggestion","enabled":true}],"input_selector":"input[name='s']:not('.no-autocomplete')"},"indices":{"searchable_posts":{"name":"sby_searchable_posts","id":"searchable_posts","enabled":true,"replicas":[]},"posts_post":{"name":"sby_posts_post","id":"posts_post","enabled":true,"replicas":[]},"posts_page":{"name":"sby_posts_page","id":"posts_page","enabled":true,"replicas":[]},"posts_language_switcher":{"name":"sby_posts_language_switcher","id":"posts_language_switcher","enabled":true,"replicas":[]}}};</script>
+<script type="text/html" id="tmpl-autocomplete-header">____simple_html_dom__voku__broken_html____3213950590</script>
+
+<script type="text/html" id="tmpl-autocomplete-post-suggestion">____simple_html_dom__voku__broken_html____749937190</script>
+
+<script type="text/html" id="tmpl-autocomplete-term-suggestion">____simple_html_dom__voku__broken_html____469546714</script>
+
+<script type="text/html" id="tmpl-autocomplete-user-suggestion">____simple_html_dom__voku__broken_html____616239690</script>
+
+<script type="text/html" id="tmpl-autocomplete-footer">
+	<div class="autocomplete-footer">
+		<div class="autocomplete-footer-branding">
+			<a href="#" class="algolia-powered-by-link" title="Algolia">
+				<svg width="130" viewbox="0 0 130 18" xmlns="http://www.w3.org/2000/svg">
+					<title>Search by Algolia</title>
+					<defs>
+						<lineargradient x1="-36.868%" y1="134.936%" x2="129.432%" y2="-27.7%" id="a">
+							<stop stop-color="#00AEFF" offset="0%"></stop>
+							<stop stop-color="#3369E7" offset="100%"></stop>
+						</lineargradient>
+					</defs>
+					<g fill="none" fill-rule="evenodd">
+						<path d="M59.399.022h13.299a2.372 2.372 0 0 1 2.377 2.364V15.62a2.372 2.372 0 0 1-2.377 2.364H59.399a2.372 2.372 0 0 1-2.377-2.364V2.381A2.368 2.368 0 0 1 59.399.022z" fill="url(#a)"></path>
+						<path d="M66.257 4.56c-2.815 0-5.1 2.272-5.1 5.078 0 2.806 2.284 5.072 5.1 5.072 2.815 0 5.1-2.272 5.1-5.078 0-2.806-2.279-5.072-5.1-5.072zm0 8.652c-1.983 0-3.593-1.602-3.593-3.574 0-1.972 1.61-3.574 3.593-3.574 1.983 0 3.593 1.602 3.593 3.574a3.582 3.582 0 0 1-3.593 3.574zm0-6.418v2.664c0 .076.082.131.153.093l2.377-1.226c.055-.027.071-.093.044-.147a2.96 2.96 0 0 0-2.465-1.487c-.055 0-.11.044-.11.104l.001-.001zm-3.33-1.956l-.312-.311a.783.783 0 0 0-1.106 0l-.372.37a.773.773 0 0 0 0 1.101l.307.305c.049.049.121.038.164-.011.181-.245.378-.479.597-.697.225-.223.455-.42.707-.599.055-.033.06-.109.016-.158h-.001zm5.001-.806v-.616a.781.781 0 0 0-.783-.779h-1.824a.78.78 0 0 0-.783.779v.632c0 .071.066.12.137.104a5.736 5.736 0 0 1 1.588-.223c.52 0 1.035.071 1.534.207a.106.106 0 0 0 .131-.104z" fill="#FFF"></path>
+						<path d="M102.162 13.762c0 1.455-.372 2.517-1.123 3.193-.75.676-1.895 1.013-3.44 1.013-.564 0-1.736-.109-2.673-.316l.345-1.689c.783.163 1.819.207 2.361.207.86 0 1.473-.174 1.84-.523.367-.349.548-.866.548-1.553v-.349a6.374 6.374 0 0 1-.838.316 4.151 4.151 0 0 1-1.194.158 4.515 4.515 0 0 1-1.616-.278 3.385 3.385 0 0 1-1.254-.817 3.744 3.744 0 0 1-.811-1.351c-.192-.539-.29-1.504-.29-2.212 0-.665.104-1.498.307-2.054a3.925 3.925 0 0 1 .904-1.433 4.124 4.124 0 0 1 1.441-.926 5.31 5.31 0 0 1 1.945-.365c.696 0 1.337.087 1.961.191a15.86 15.86 0 0 1 1.588.332v8.456h-.001zm-5.954-4.206c0 .893.197 1.885.592 2.299.394.414.904.621 1.528.621.34 0 .663-.049.964-.142a2.75 2.75 0 0 0 .734-.332v-5.29a8.531 8.531 0 0 0-1.413-.18c-.778-.022-1.369.294-1.786.801-.411.507-.619 1.395-.619 2.223zm16.12 0c0 .719-.104 1.264-.318 1.858a4.389 4.389 0 0 1-.904 1.52c-.389.42-.854.746-1.402.975-.548.229-1.391.36-1.813.36-.422-.005-1.26-.125-1.802-.36a4.088 4.088 0 0 1-1.397-.975 4.486 4.486 0 0 1-.909-1.52 5.037 5.037 0 0 1-.329-1.858c0-.719.099-1.411.318-1.999.219-.588.526-1.09.92-1.509.394-.42.865-.741 1.402-.97a4.547 4.547 0 0 1 1.786-.338 4.69 4.69 0 0 1 1.791.338c.548.229 1.019.55 1.402.97.389.42.69.921.909 1.509.23.588.345 1.28.345 1.999h.001zm-2.191.005c0-.921-.203-1.689-.597-2.223-.394-.539-.948-.806-1.654-.806-.707 0-1.26.267-1.654.806-.394.539-.586 1.302-.586 2.223 0 .932.197 1.558.592 2.098.394.545.948.812 1.654.812.707 0 1.26-.272 1.654-.812.394-.545.592-1.166.592-2.098h-.001zm6.962 4.707c-3.511.016-3.511-2.822-3.511-3.274L113.583.926l2.142-.338v10.003c0 .256 0 1.88 1.375 1.885v1.792h-.001zm3.774 0h-2.153V5.072l2.153-.338v9.534zm-1.079-10.542c.718 0 1.304-.578 1.304-1.291 0-.714-.581-1.291-1.304-1.291-.723 0-1.304.578-1.304 1.291 0 .714.586 1.291 1.304 1.291zm6.431 1.013c.707 0 1.304.087 1.786.262.482.174.871.42 1.156.73.285.311.488.735.608 1.182.126.447.186.937.186 1.476v5.481a25.24 25.24 0 0 1-1.495.251c-.668.098-1.419.147-2.251.147a6.829 6.829 0 0 1-1.517-.158 3.213 3.213 0 0 1-1.178-.507 2.455 2.455 0 0 1-.761-.904c-.181-.37-.274-.893-.274-1.438 0-.523.104-.855.307-1.215.208-.36.487-.654.838-.883a3.609 3.609 0 0 1 1.227-.49 7.073 7.073 0 0 1 2.202-.103c.263.027.537.076.833.147v-.349c0-.245-.027-.479-.088-.697a1.486 1.486 0 0 0-.307-.583c-.148-.169-.34-.3-.581-.392a2.536 2.536 0 0 0-.915-.163c-.493 0-.942.06-1.353.131-.411.071-.75.153-1.008.245l-.257-1.749c.268-.093.668-.185 1.183-.278a9.335 9.335 0 0 1 1.66-.142l-.001-.001zm.181 7.731c.657 0 1.145-.038 1.484-.104v-2.168a5.097 5.097 0 0 0-1.978-.104c-.241.033-.46.098-.652.191a1.167 1.167 0 0 0-.466.392c-.121.169-.175.267-.175.523 0 .501.175.79.493.981.323.196.75.289 1.293.289h.001zM84.109 4.794c.707 0 1.304.087 1.786.262.482.174.871.42 1.156.73.29.316.487.735.608 1.182.126.447.186.937.186 1.476v5.481a25.24 25.24 0 0 1-1.495.251c-.668.098-1.419.147-2.251.147a6.829 6.829 0 0 1-1.517-.158 3.213 3.213 0 0 1-1.178-.507 2.455 2.455 0 0 1-.761-.904c-.181-.37-.274-.893-.274-1.438 0-.523.104-.855.307-1.215.208-.36.487-.654.838-.883a3.609 3.609 0 0 1 1.227-.49 7.073 7.073 0 0 1 2.202-.103c.257.027.537.076.833.147v-.349c0-.245-.027-.479-.088-.697a1.486 1.486 0 0 0-.307-.583c-.148-.169-.34-.3-.581-.392a2.536 2.536 0 0 0-.915-.163c-.493 0-.942.06-1.353.131-.411.071-.75.153-1.008.245l-.257-1.749c.268-.093.668-.185 1.183-.278a8.89 8.89 0 0 1 1.66-.142l-.001-.001zm.186 7.736c.657 0 1.145-.038 1.484-.104v-2.168a5.097 5.097 0 0 0-1.978-.104c-.241.033-.46.098-.652.191a1.167 1.167 0 0 0-.466.392c-.121.169-.175.267-.175.523 0 .501.175.79.493.981.318.191.75.289 1.293.289h.001zm8.682 1.738c-3.511.016-3.511-2.822-3.511-3.274L89.461.926l2.142-.338v10.003c0 .256 0 1.88 1.375 1.885v1.792h-.001z" fill="#182359"></path>
+						<path d="M5.027 11.025c0 .698-.252 1.246-.757 1.644-.505.397-1.201.596-2.089.596-.888 0-1.615-.138-2.181-.414v-1.214c.358.168.739.301 1.141.397.403.097.778.145 1.125.145.508 0 .884-.097 1.125-.29a.945.945 0 0 0 .363-.779.978.978 0 0 0-.333-.747c-.222-.204-.68-.446-1.375-.725-.716-.29-1.221-.621-1.515-.994-.294-.372-.44-.82-.44-1.343 0-.655.233-1.171.698-1.547.466-.376 1.09-.564 1.875-.564.752 0 1.5.165 2.245.494l-.408 1.047c-.698-.294-1.321-.44-1.869-.44-.415 0-.73.09-.945.271a.89.89 0 0 0-.322.717c0 .204.043.379.129.524.086.145.227.282.424.411.197.129.551.299 1.063.51.577.24.999.464 1.268.671.269.208.466.442.591.704.125.261.188.569.188.924l-.001.002zm3.98 2.24c-.924 0-1.646-.269-2.167-.808-.521-.539-.782-1.281-.782-2.226 0-.97.242-1.733.725-2.288.483-.555 1.148-.833 1.993-.833.784 0 1.404.238 1.858.714.455.476.682 1.132.682 1.966v.682H7.357c.018.577.174 1.02.467 1.329.294.31.707.465 1.241.465.351 0 .678-.033.98-.099a5.1 5.1 0 0 0 .975-.33v1.026a3.865 3.865 0 0 1-.935.312 5.723 5.723 0 0 1-1.08.091l.002-.001zm-.231-5.199c-.401 0-.722.127-.964.381s-.386.625-.432 1.112h2.696c-.007-.491-.125-.862-.354-1.115-.229-.252-.544-.379-.945-.379l-.001.001zm7.692 5.092l-.252-.827h-.043c-.286.362-.575.608-.865.739-.29.131-.662.196-1.117.196-.584 0-1.039-.158-1.367-.473-.328-.315-.491-.761-.491-1.337 0-.612.227-1.074.682-1.386.455-.312 1.148-.482 2.079-.51l1.026-.032v-.317c0-.38-.089-.663-.266-.851-.177-.188-.452-.282-.824-.282-.304 0-.596.045-.876.134a6.68 6.68 0 0 0-.806.317l-.408-.902a4.414 4.414 0 0 1 1.058-.384 4.856 4.856 0 0 1 1.085-.132c.756 0 1.326.165 1.711.494.385.329.577.847.577 1.552v4.002h-.902l-.001-.001zm-1.88-.859c.458 0 .826-.128 1.104-.384.278-.256.416-.615.416-1.077v-.516l-.763.032c-.594.021-1.027.121-1.297.298s-.406.448-.406.814c0 .265.079.47.236.615.158.145.394.218.709.218h.001zm7.557-5.189c.254 0 .464.018.628.054l-.124 1.176a2.383 2.383 0 0 0-.559-.064c-.505 0-.914.165-1.227.494-.313.329-.47.757-.47 1.284v3.105h-1.262V7.218h.988l.167 1.047h.064c.197-.354.454-.636.771-.843a1.83 1.83 0 0 1 1.023-.312h.001zm4.125 6.155c-.899 0-1.582-.262-2.049-.787-.467-.525-.701-1.277-.701-2.259 0-.999.244-1.767.733-2.304.489-.537 1.195-.806 2.119-.806.627 0 1.191.116 1.692.349l-.381 1.015c-.534-.208-.974-.312-1.321-.312-1.028 0-1.542.682-1.542 2.046 0 .666.128 1.166.384 1.501.256.335.631.502 1.125.502a3.23 3.23 0 0 0 1.595-.419v1.101a2.53 2.53 0 0 1-.722.285 4.356 4.356 0 0 1-.932.086v.002zm8.277-.107h-1.268V9.506c0-.458-.092-.8-.277-1.026-.184-.226-.477-.338-.878-.338-.53 0-.919.158-1.168.475-.249.317-.373.848-.373 1.593v2.949h-1.262V4.801h1.262v2.122c0 .34-.021.704-.064 1.09h.081a1.76 1.76 0 0 1 .717-.666c.306-.158.663-.236 1.072-.236 1.439 0 2.159.725 2.159 2.175v3.873l-.001-.001zm7.649-6.048c.741 0 1.319.269 1.732.806.414.537.62 1.291.62 2.261 0 .974-.209 1.732-.628 2.275-.419.542-1.001.814-1.746.814-.752 0-1.336-.27-1.751-.811h-.086l-.231.704h-.945V4.801h1.262v1.987l-.021.655-.032.553h.054c.401-.591.992-.886 1.772-.886zm-.328 1.031c-.508 0-.875.149-1.098.448-.224.299-.339.799-.346 1.501v.086c0 .723.115 1.247.344 1.571.229.324.603.486 1.123.486.448 0 .787-.177 1.018-.532.231-.354.346-.867.346-1.536 0-1.35-.462-2.025-1.386-2.025l-.001.001zm3.244-.924h1.375l1.209 3.368c.183.48.304.931.365 1.354h.043c.032-.197.091-.436.177-.717.086-.281.541-1.616 1.364-4.004h1.364l-2.541 6.73c-.462 1.235-1.232 1.853-2.31 1.853-.279 0-.551-.03-.816-.091v-.999c.19.043.406.064.65.064.609 0 1.037-.353 1.284-1.058l.22-.559-2.385-5.941h.001z" fill="#1D3657"></path>
+					</g>
+				</svg>
+			</a>
+		</div>
+	</div>
+</script>
+
+<script type="text/html" id="tmpl-autocomplete-empty">____simple_html_dom__voku__broken_html____1793597983</script>
+
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">window.addEventListener('DOMContentLoaded', function() {
+	jQuery( function () {
+		/* Initialize Algolia client */
+		var client = algoliasearch( algolia.application_id, algolia.search_api_key );
+
+		/**
+		 * Algolia hits source method.
+		 *
+		 * This method defines a custom source to use with autocomplete.js.
+		 *
+		 * @param object $index Algolia index object.
+		 * @param object $params Options object to use in search.
+		 */
+		var algoliaHitsSource = function( index, params ) {
+			return function( query, callback ) {
+				index
+					.search( query, params )
+					.then( function( response ) {
+						callback( response.hits, response );
+					})
+					.catch( function( error ) {
+						callback( [] );
+					});
+			}
+		}
+
+		/* Setup autocomplete.js sources */
+		var sources = [];
+		jQuery.each( algolia.autocomplete.sources, function ( i, config ) {
+			var suggestion_template = wp.template( config[ 'tmpl_suggestion' ] );
+			sources.push( {
+				source: algoliaHitsSource( client.initIndex( config[ 'index_name' ] ), {
+					hitsPerPage: config[ 'max_suggestions' ],
+					attributesToSnippet: [
+						'content:10'
+					],
+					highlightPreTag: '__ais-highlight__',
+					highlightPostTag: '__/ais-highlight__'
+				} ),
+				templates: {
+					header: function () {
+						return wp.template( 'autocomplete-header' )( {
+							label: _.escape( config[ 'label' ] )
+						} );
+					},
+					suggestion: function ( hit ) {
+						if ( hit.escaped === true ) {
+							return suggestion_template( hit );
+						}
+						hit.escaped = true;
+
+						for ( var key in hit._highlightResult ) {
+							/* We do not deal with arrays. */
+							if ( typeof hit._highlightResult[ key ].value !== 'string' ) {
+								continue;
+							}
+							hit._highlightResult[ key ].value = _.escape( hit._highlightResult[ key ].value );
+							hit._highlightResult[ key ].value = hit._highlightResult[ key ].value.replace( /__ais-highlight__/g, '<em>' ).replace( /__\/ais-highlight__/g, '<\/em>' );
+						}
+
+						for ( var key in hit._snippetResult ) {
+							/* We do not deal with arrays. */
+							if ( typeof hit._snippetResult[ key ].value !== 'string' ) {
+								continue;
+							}
+
+							hit._snippetResult[ key ].value = _.escape( hit._snippetResult[ key ].value );
+							hit._snippetResult[ key ].value = hit._snippetResult[ key ].value.replace( /__ais-highlight__/g, '<em>' ).replace( /__\/ais-highlight__/g, '<\/em>' );
+						}
+
+						return suggestion_template( hit );
+					}
+				}
+			} );
+
+		} );
+
+		/* Setup dropdown menus */
+		jQuery( algolia.autocomplete.input_selector ).each( function ( i ) {
+			var $searchInput = jQuery( this );
+
+			var config = {
+				debug: algolia.debug,
+				hint: false,
+				openOnFocus: true,
+				appendTo: 'body',
+				templates: {
+					empty: wp.template( 'autocomplete-empty' )
+				}
+			};
+
+			if ( algolia.powered_by_enabled ) {
+				config.templates.footer = wp.template( 'autocomplete-footer' );
+			}
+
+			/* Instantiate autocomplete.js */
+			var autocomplete = algoliaAutocomplete( $searchInput[ 0 ], config, sources )
+				.on( 'autocomplete:selected', function ( e, suggestion ) {
+					/* Redirect the user when we detect a suggestion selection. */
+					window.location.href = suggestion.permalink;
+				} );
+
+			/* Force the dropdown to be re-drawn on scroll to handle fixed containers. */
+			jQuery( window ).on( 'scroll', function() {
+				if ( autocomplete.autocomplete.getWrapper().style.display === "block" ) {
+					autocomplete.autocomplete.close();
+					autocomplete.autocomplete.open();
+				}
+			} );
+		} );
+
+		jQuery( document ).on( "click", ".algolia-powered-by-link", function ( e ) {
+			e.preventDefault();
+			window.location = "https://www.algolia.com/?utm_source=WordPress&utm_medium=extension&utm_content=" + window.location.hostname + "&utm_campaign=poweredby";
+		} );
+	} );
+});</script>
+<link rel="preload" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.4.4" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type="text/css" media="all">
+<script type="text/javascript" id="trp-dynamic-translator-js-extra">
+/* <![CDATA[ */
+var trp_data = {"trp_custom_ajax_url":"https:\/\/www.suroboyo.web.id\/wp-content\/plugins\/translatepress-multilingual\/includes\/trp-ajax.php","trp_wp_ajax_url":"https:\/\/www.suroboyo.web.id\/wp-admin\/admin-ajax.php","trp_language_to_query":"en_US","trp_original_language":"id_ID","trp_current_language":"en_US","trp_skip_selectors":["[data-no-translation]","[data-no-dynamic-translation]","[data-trp-translate-id-innertext]","script","style","head","trp-span","translate-press","[data-trp-translate-id]","[data-trpgettextoriginal]","[data-trp-post-slug]"],"trp_base_selectors":["data-trp-translate-id","data-trpgettextoriginal","data-trp-post-slug"],"trp_attributes_selectors":{"text":{"accessor":"outertext","attribute":false},"block":{"accessor":"innertext","attribute":false},"image_src":{"selector":"img[src]","accessor":"src","attribute":true},"submit":{"selector":"input[type='submit'],input[type='button'], input[type='reset']","accessor":"value","attribute":true},"placeholder":{"selector":"input[placeholder],textarea[placeholder]","accessor":"placeholder","attribute":true},"title":{"selector":"[title]","accessor":"title","attribute":true},"a_href":{"selector":"a[href]","accessor":"href","attribute":true},"button":{"accessor":"outertext","attribute":false},"option":{"accessor":"innertext","attribute":false},"aria_label":{"selector":"[aria-label]","accessor":"aria-label","attribute":true}},"trp_attributes_accessors":["outertext","innertext","src","value","placeholder","title","href","aria-label"],"gettranslationsnonceregular":"e7f025921c","showdynamiccontentbeforetranslation":"","skip_strings_from_dynamic_translation":[],"skip_strings_from_dynamic_translation_for_substrings":{"href":["amazon-adsystem","googleads","g.doubleclick"]},"duplicate_detections_allowed":"100","trp_translate_numerals_opt":"no","trp_no_auto_translation_selectors":["[data-no-auto-translation]"]};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/js/trp-translate-dom-changes.js?ver=2.1.2" id="trp-dynamic-translator-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-extra">
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/en(\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$))|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/www.suroboyo.web.id\/en","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-preload-links-js-after">
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-includes/js/underscore.min.js?ver=1.13.1" id="underscore-js" defer></script>
+<script type="text/javascript" id="wp-util-js-extra">
+/* <![CDATA[ */
+var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-includes/js/wp-util.min.js?ver=5.8.1" id="wp-util-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/wp-search-with-algolia/js/algoliasearch/dist/algoliasearch-lite.umd.js?ver=2.1.0" id="algolia-search-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/wp-search-with-algolia/js/autocomplete.js/dist/autocomplete.min.js?ver=2.1.0" id="algolia-autocomplete-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/wp-search-with-algolia/js/autocomplete-noconflict.js?ver=2.1.0" id="algolia-autocomplete-noconflict-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js?ver=1.0.1" id="smartmenus-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-includes/js/imagesloaded.min.js?ver=4.1.4" id="imagesloaded-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.3.7" id="elementor-pro-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.4.4" id="elementor-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.4.4" id="elementor-frontend-modules-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="elementor-pro-frontend-js-before">
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.suroboyo.web.id\/wp-admin\/admin-ajax.php","nonce":"93b634dab2","urls":{"assets":"https:\/\/www.suroboyo.web.id\/wp-content\/plugins\/elementor-pro\/assets\/"},"i18n":{"toc_no_headings_found":"No headings were found on this page."},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"google":{"title":"Google+","has_counter":true},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":"3432265873563248"},"lottie":{"defaultAnimationUrl":"https:\/\/www.suroboyo.web.id\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.3.7" id="elementor-pro-frontend-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2" id="elementor-waypoints-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-includes/js/jquery/ui/core.min.js?ver=1.12.1" id="jquery-ui-core-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="elementor-frontend-js-before">
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.4.4","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"e_optimized_css_loading":true,"a11y_improvements":true,"landing-pages":true,"form-submissions":true},"urls":{"assets":"https:\/\/www.suroboyo.web.id\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"editorPreferences":[]},"kit":{"body_background_background":"classic","active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":0,"title":"jendral mallaby &#8211; The Suroboyo Heritage Trail","excerpt":""}};
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.4.4" id="elementor-frontend-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.3.7" id="pro-elements-handlers-js" defer></script>
+<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.suroboyo.web.id/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script>
+<script type="rocketlazyloadscript">"use strict";var wprRemoveCPCSS=function wprRemoveCPCSS(){var elem;document.querySelector('link[data-rocket-async="style"][rel="preload"]')?setTimeout(wprRemoveCPCSS,200):(elem=document.getElementById("rocket-critical-css"))&&"remove"in elem&&elem.remove()};window.addEventListener?window.addEventListener("load",wprRemoveCPCSS):window.attachEvent&&window.attachEvent("onload",wprRemoveCPCSS);</script><noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair%20Display%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap">
+<link rel="stylesheet" id="wp-block-library-css" href="https://www.suroboyo.web.id/wp-includes/css/dist/block-library/style.min.css?ver=5.8.1" type="text/css" media="all">
+<link rel="stylesheet" id="trp-language-switcher-style-css" href="https://www.suroboyo.web.id/wp-content/plugins/translatepress-multilingual/assets/css/trp-language-switcher.css?ver=2.1.2" type="text/css" media="all">
+<link rel="stylesheet" id="hello-elementor-css" href="https://www.suroboyo.web.id/wp-content/themes/hello-elementor/style.min.css?ver=2.4.1" type="text/css" media="all">
+<link rel="stylesheet" id="hello-elementor-theme-style-css" href="https://www.suroboyo.web.id/wp-content/themes/hello-elementor/theme.min.css?ver=2.4.1" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-frontend-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.4.4" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-6-css" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-6.css?ver=1631739063" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-pro-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/frontend-lite.min.css?ver=3.3.7" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-5-all-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css?ver=3.4.4" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-4-shim-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css?ver=3.4.4" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-global-css" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/global.css?ver=1631739064" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-17-css" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-17.css?ver=1631739064" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-105-css" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-105.css?ver=1631739064" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-114-css" href="https://www.suroboyo.web.id/wp-content/uploads/elementor/css/post-114.css?ver=1631956689" type="text/css" media="all">
+<link rel="stylesheet" id="algolia-autocomplete-css" href="https://www.suroboyo.web.id/wp-content/plugins/wp-search-with-algolia/css/algolia-autocomplete.css?ver=2.1.0" type="text/css" media="all">
+<link rel="stylesheet" id="hello-elementor-child-style-css" href="https://www.suroboyo.web.id/wp-content/themes/hello-theme-child-master/style.css?ver=1.0.0" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-icons-shared-0-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css?ver=5.15.3" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-icons-fa-brands-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/brands.min.css?ver=5.15.3" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-icons-fa-solid-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css?ver=5.15.3" type="text/css" media="all">
+<link rel="stylesheet" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css">
+<link rel="stylesheet" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/widget-posts.min.css">
+<link rel="stylesheet" href="https://www.suroboyo.web.id/wp-content/plugins/elementor-pro/assets/css/widget-carousel.min.css">
+<link rel="stylesheet" id="e-animations-css" href="https://www.suroboyo.web.id/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.4.4" type="text/css" media="all">
+</noscript>
+</body>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
+</html>
